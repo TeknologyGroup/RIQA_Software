@@ -1,15 +1,23 @@
-# RIQA Software - Progetto Riemann-Quantum-Astral Integration
+# RIQA Software - Progetto Riemann-Quantum-Astral Integration### 
 
-## Struttura del Progetto
-- **frontend/**: Interfaccia utente in React.
-- **backend/**: Backend in Python con Flask.
-- **database/**: Database SQLite per archiviare dati.
-- **visualizations/**: Grafici e visualizzazioni 3D.
-- **hardware/**: Codice per Arduino e Raspberry Pi.
-- **tests/**: Test automatici.
-- **docs/**: Documentazione.
+**Pagina dei Crediti**
 
-## Come Eseguire
-1. Avvia il backend: `python3 backend/main.py`
-2. Avvia il frontend: `npm start` nella directory `frontend/`
-3. Accedi all'app tramite browser all'indirizzo `http://localhost:3000`
+- **Autore**: Martino Battista
+- **Licenza**: "Rilasciato sotto licenza MIT - Vedi Appendice per dettagli."
+- **Dedica**: A chi cerca di unire scienza e cosmo.
+
+---
+
+### **Indice**
+
+1. Introduzione
+2. Teoria Matematica e Fisica
+3. Modellazione dell'Evoluzione Biologica
+4. Frequenze Cosmiche e Astrali
+5. Software Unificato
+6. App per Frequenze Radio
+7. Portale Spazio-Temporale
+8. Validazione Sperimentale
+9. Applicazioni Pratiche
+10. Conclusione e Prospettive Future
+11. Appendici
