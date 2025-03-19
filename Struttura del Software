@@ -1,0 +1,225 @@
+## **Struttura del Software**
+
+### **Architettura Generale**
+
+Il software sarà basato su un'architettura **modulare** e **scalabile**, con i seguenti componenti principali:
+
+1. **Interfaccia Utente (UI)**:
+    - Un'interfaccia grafica intuitiva per navigare tra i capitoli, eseguire simulazioni e visualizzare dati.
+2. **Backend**:
+    - Un motore di calcolo per eseguire simulazioni matematiche, fisiche e biologiche.
+3. **Database**:
+    - Un database per archiviare dati sperimentali, risultati delle simulazioni e metadati.
+4. **Visualizzazioni**:
+    - Strumenti per creare grafici, animazioni e visualizzazioni 3D interattive.
+5. **Integrazione Hardware**:
+    - Supporto per dispositivi esterni (es. Raspberry Pi, Arduino) per la raccolta e l'elaborazione di dati in tempo reale.
+
+---
+
+## **Struttura delle Directory del Software**
+
+```
+RIQA_Software/
+│
+├── frontend/                  # Interfaccia utente
+│   ├── public/                # File statici (HTML, CSS, immagini)
+│   └── src/                   # Codice sorgente dell'interfaccia
+│       ├── components/        # Componenti React
+│       ├── pages/             # Pagine dell'app
+│       └── App.js             # File principale dell'app
+│
+├── backend/                   # Backend per calcoli e simulazioni
+│   ├── simulations/           # Codice per le simulazioni
+│   ├── api/                   # API per comunicare con il frontend
+│   └── main.py                # File principale del backend
+│
+├── database/                  # Database per dati e risultati
+│   ├── models/                # Modelli dei dati
+│   ├── migrations/            # Migrazioni del database
+│   └── db.sqlite3             # File del database SQLite
+│
+├── visualizations/            # Visualizzazioni e grafici
+│   ├── plots/                 # Grafici statici (Matplotlib, Plotly)
+│   └── threejs/               # Visualizzazioni 3D con Three.js
+│
+├── hardware/                  # Integrazione con dispositivi hardware
+│   ├── arduino/               # Codice per Arduino
+│   └── raspberry_pi/          # Codice per Raspberry Pi
+│
+├── tests/                     # Test automatici
+│   ├── unit_tests/            # Test unitari
+│   └── integration_tests/     # Test di integrazione
+│
+└── docs/                      # Documentazione
+    ├── user_manual/           # Manuale utente
+    └── developer_guide/       # Guida per sviluppatori
+
+```
+
+---
+
+## **Componenti del Software**
+
+### **1. Frontend (Interfaccia Utente)**
+
+Il frontend sarà sviluppato con **React** per garantire un'esperienza utente reattiva e moderna.
+
+### **File Principale: `frontend/src/App.js`**
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Simulations from './pages/Simulations';
+import Visualizations from './pages/Visualizations';
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/simulations" element={<Simulations />} />
+                <Route path="/visualizations" element={<Visualizations />} />
+            </Routes>
+        </Router>
+    );
+}
+
+export default App;
+
+```
+
+### **Esempio di Componente: `frontend/src/components/SimulationForm.js`**
+
+```jsx
+import React, { useState } from 'react';
+
+function SimulationForm() {
+    const [input, setInput] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Invia i dati al backend per eseguire la simulazione
+        console.log("Simulazione inviata:", input);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Inserisci i parametri"
+            />
+            <button type="submit">Esegui Simulazione</button>
+        </form>
+    );
+}
+
+export default SimulationForm;
+
+```
+
+---
+
+### **2. Backend (Calcoli e Simulazioni)**
+
+Il backend sarà sviluppato in **Python** con **Flask** per gestire le richieste del frontend e eseguire simulazioni.
+
+### **File Principale: `backend/main.py`**
+
+```python
+from flask import Flask, request, jsonify
+from simulations.evolution import run_evolution_simulation
+
+app = Flask(__name__)
+
+@app.route('/simulate', methods=['POST'])
+def simulate():
+    data = request.json
+    result = run_evolution_simulation(data['parameters'])
+    return jsonify(result)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+```
+
+### **Esempio di Simulazione: `backend/simulations/evolution.py`**
+
+```python
+import numpy as np
+
+def run_evolution_simulation(parameters):
+    # Estrai i parametri
+    mu = parameters['mu']
+    s = parameters['s']
+    N = parameters['N']
+    m = parameters['m']
+    p_migrante = parameters['p_migrante']
+    p0 = parameters['p0']
+    t_max = parameters['t_max']
+
+    # Simulazione
+    t = np.linspace(0, t_max, 1000)
+    p = np.zeros_like(t)
+    p[0] = p0
+
+    for i in range(1, len(t)):
+        p[i] = p[i-1] + (mu * p[i-1] * (1 - p[i-1]) +
+                        s * p[i-1] * (1 - p[i-1]) -
+                        (p[i-1] * (1 - p[i-1])) / (2 * N) +
+                        m * (p_migrante - p[i-1])) * (t[i] - t[i-1])
+
+    return {'time': t.tolist(), 'frequency': p.tolist()}
+
+```
+
+---
+
+### **3. Database**
+
+Utilizzeremo **SQLite** per archiviare dati e risultati.
+
+### **Esempio di Modello: `database/models/simulation_results.py`**
+
+```python
+from sqlalchemy import Column, Integer, Float, String
+from database.base import Base
+
+class SimulationResult(Base):
+    __tablename__ = 'simulation_results'
+    id = Column(Integer, primary_key=True)
+    simulation_type = Column(String)
+    parameters = Column(String)
+    results = Column(String)
+
+```
+
+---
+
+### **4. Visualizzazioni**
+
+Le visualizzazioni saranno create con **Plotly** per grafici interattivi e **Three.js** per visualizzazioni 3D.
+
+### **Esempio di Grafico Interattivo: `visualizations/plots/evolution_plot.py`**
+
+```python
+import plotly.graph_objects as go
+
+def create_evolution_plot(time, frequency):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=time, y=frequency, mode='lines', name='Frequenza Allelica'))
+    fig.update_layout(title="Simulazione Evolutiva", xaxis_title="Tempo", yaxis_title="Frequenza Allelica")
+    return fig
+
+```
+
+---
+
+### **5. Integrazione Hardware**
+
+Il software supporterà l'integrazione con dispositivi hardware come **Arduino** e **Raspberry Pi**.
+
+### **Esempio di Codice Arduino: `hardware/arduino/transmitter.ino`**
