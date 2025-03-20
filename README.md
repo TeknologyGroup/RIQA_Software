@@ -93,7 +93,7 @@ Applicazioni
 
 Contributi
 
-Contributi sono benvenuti! Apri una pull request o segnala un problema (issue) su GitHub. Per collaborazioni, contatta [tuo-email].
+Contributi sono benvenuti! Apri una pull request o segnala un problema (issue) su GitHub. Per collaborazioni, contatta genesis-quantum@proton.me martinobattista@gmail.com
 
 Licenza
 
