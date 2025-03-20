@@ -37,4 +37,18 @@ def read_from_bluetooth():
             ser.close()
 
 if __name__ == "__main__":
-    read_from_bluetooth()
+    read_from_def save_to_database(data: str):
+    if "ACCEL:" in data:
+        accel = float(data.split("ACCEL:")[1])
+        with Session(engine) as session:
+            result = SimulationResult(
+                simulation_type="sensor_data",
+                parameters="Accelerazione gravitazionale",
+                results=f"{accel}"
+            )
+            session.add(result)
+            session.commit()
+            # Correlazione con simulazione wormhole
+            sim = WormholeZetaSimulation(zero_index=1)
+            metric = sim.calculate_metric()
+            print(f"Correlazione: Accelerazione={accel}, b0={metric['b0']}")
