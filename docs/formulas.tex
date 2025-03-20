@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\title{Formule Matematiche di RIQA\_Software}
+\author{Martino Battista}
+\date{20 Marzo 2025}
+\maketitle
+
+\begin{abstract}
+Questo documento raccoglie le equazioni matematiche principali utilizzate nel progetto RIQA\_Software, che esplora la connessione tra la metrica dei wormhole attraversabili e gli zeri non banali della funzione zeta di Riemann. Le formule sono presentate con derivazioni semplificate e riferimenti al codice del progetto.
+\end{abstract}
+
+\section{Metrica del Wormhole}
+La metrica di un wormhole attraversabile, secondo Morris e Thorne, è definita come:
+\begin{equation}
+ds^2 = -e^{2\Phi(r)} dt^2 + \frac{dr^2}{1 - \frac{b(r)}{r}} + r^2 (d\theta^2 + \sin^2\theta \, d\phi^2),
+\label{eq:metric}
+\end{equation}
+dove:
+\begin{itemize}
+    \item \( \Phi(r) \): Potenziale di redshift, assunto come \( \Phi(r) = -\frac{b_0}{r} \),
+    \item \( b(r) \): Funzione di forma, semplificata a \( b(r) = b_0 \) (costante),
+    \item \( r \): Coordinata radiale, con \( r \geq b_0 \),
+    \item \( b_0 \): Raggio della gola, proposto come \( b_0 = t_n \), dove \( t_n \) è la parte immaginaria di uno zero non banale di \( \zeta(s) \).
+\end{itemize}
+
+\section{Funzione Zeta di Riemann}
+La funzione zeta è definita per \( \text{Re}(s) > 1 \) come:
+\begin{equation}
+\zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s} = \prod_{p \text{ primo}} \left(1 - p^{-s}\right)^{-1},
+\label{eq:zeta}
+\end{equation}
+e continuata analiticamente per tutto \( \mathbb{C} \). Gli zeri non banali si trovano sulla linea critica:
+\begin{equation}
+s = \frac{1}{2} + i t_n, \quad t_1 \approx 14.1347, \quad t_2 \approx 21.0220, \ldots
+\label{eq:zeros}
+\end{equation}
+
+\section{Ipotesi dell’Integrale}
+L’ipotesi centrale propone:
+\begin{equation}
+\zeta(s) = \int_{\partial M} O(x)^s \, d\mu(x),
+\label{eq:integral}
+\end{equation}
+dove:
+\begin{itemize}
+    \item \( \partial M \): Superficie della gola (\( r = b_0 \)),
+    \item \( O(x) \): Operatore geometrico, identificato con la curvatura scalare \( R \),
+    \item \( d\mu(x) \): Misura differenziale, \( d\mu = b_0^2 \sin\theta \, d\theta \, d\phi \) sulla sfera \( S^2 \).
+\end{itemize}
+
+\section{Curvatura Scalare}
+Per \( b(r) = b_0 \) e \( \Phi(r) = -\frac{b_0}{r} \), la curvatura scalare approssimata è:
+\begin{equation}
+R \approx -\frac{2 b'(r)}{r^2} + 2 \Phi''(r).
+\end{equation}
+Con \( b'(r) = 0 \) e \( \Phi''(r) = \frac{2 b_0}{r^3} \):
+\begin{equation}
+R \approx \frac{4 b_0}{r^3}.
+\label{eq:curvature}
+\end{equation}
+
+\section{Derivazione dell’Integrale}
+Sulla gola (\( r = b_0 \)), \( R = \frac{4}{b_0^2} \), e l’integrale diventa:
+\begin{equation}
+\zeta(s) \approx \int_0^\pi \int_0^{2\pi} \left( \frac{4}{b_0^2} \right)^s b_0^2 \sin\theta \, d\theta \, d\phi.
+\end{equation}
+Calcolando:
+\begin{equation}
+\int_0^\pi \sin\theta \, d\theta = 2, \quad \int_0^{2\pi} d\phi = 2\pi,
+\end{equation}
+si ottiene:
+\begin{equation}
+\zeta(s) \approx 4^s b_0^{2-2s} \cdot 4\pi.
+\label{eq:integral_result}
+\end{equation}
+Se \( b_0 = t_n \), gli zeri \( \zeta(1/2 + it_n) = 0 \) suggeriscono una condizione di risonanza geometrica.
+
+\section{Perturbazione Dinamica}
+Per esplorare effetti dinamici, si propone:
+\begin{equation}
+b(r) = b_0 \left( 1 + \epsilon \sin\left( \frac{t_n r}{b_0} \right) \right),
+\label{eq:dynamic}
+\end{equation}
+dove \( \epsilon \) è una piccola perturbazione, introducendo oscillazioni legate a \( t_n \).
+
+\section{Riferimenti al Software}
+- Simulazione: `backend/simulations/wormhole_zeta.py` usa \( b_0 = t_n \).
+- Visualizzazione: `visualizations/plots/wormhole_plot.py` e `frontend/src/components/Wormhole3D.js`.
+
+\end{document}
