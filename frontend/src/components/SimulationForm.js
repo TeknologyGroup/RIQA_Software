@@ -1,7 +1,17 @@
-const handleSubmit = async (e) => {
-  // ... (codice esistente)
-  const result = await response.json();
-  console.log('Risultato:', result);
-  if (props.onResult) props.onResult(result); // Passa i dati al genitore
-  // ... (codice esistente)
+import React, { useState } from 'react';
+
+import SimulationForm from '../components/SimulationForm';
+
+import Wormhole3D from '../components/Wormhole3D';
+
+function Simulations() {
+
+const [simulationData, setSimulationData] = useState(null);
+
+const handleSimulationResult = (data) => {
+
+setSimulationData(data);
+
 };
+
+return (
