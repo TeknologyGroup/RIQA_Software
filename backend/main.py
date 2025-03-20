@@ -1,15 +1,12 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from simulations.evolution import run_evolution_simulation
+import serial
 
-app = Flask(__name__)
-CORS(app)  # Per consentire richieste dal frontend
+def read_from_arduino(port='/dev/ttyUSB0', baud_rate=9600):
+    ser = serial.Serial(port, baud_rate, timeout=1)
+    while True:
+        if ser.in_waiting > 0:
+            data = ser.readline().decode('utf-8').strip()
+            print("Received from Arduino:", data)
+            # Process or store the data as needed
+    ser.close()
 
-@app.route('/simulate', methods=['POST'])
-def simulate():
-    data = request.json
-    result = run_evolution_simulation(data['parameters'])
-    return jsonify(result)
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+# Call this in your Flask app if needed
