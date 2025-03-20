@@ -1,39 +1,33 @@
 import plotly.graph_objects as go
 import numpy as np
+import pandas as pd
 
-def create_wormhole_plot(r, b_r, Phi_r, b0, t_n):
-    fig = go.Figure()
-    
-    # Traccia b(r)
-    fig.add_trace(go.Scatter(
-        x=r, y=b_r, mode='lines', name='Funzione di forma b(r)',
-        line=dict(color='blue', width=2)
-    ))
-    
-    # Traccia Phi(r)
-    fig.add_trace(go.Scatter(
-        x=r, y=Phi_r, mode='lines', name='Potenziale Φ(r)',
-        line=dict(color='red', width=2, dash='dash')
-    ))
-    
-    # Linea della gola
-    fig.add_vline(x=b0, line=dict(color='gray', dash='dot'), annotation_text=f'b0 = {b0:.2f}')
-    
-    fig.update_layout(
-        title=f"Profilo Wormhole con Zero Zeta t_n = {t_n:.2f}",
-        xaxis_title="Coordinata radiale r",
-        yaxis_title="Valore",
-        template="plotly_white",
-        hovermode="x unified",
-        showlegend=True
-    )
-    
-    return fig
+def create_analysis_plots(df, stats):
+    # Grafico per file (esempio per il primo file)
+    for file_key in df["File Key"].unique():
+        file_df = df[df["File Key"] == file_key]
+        fig = go.Figure()
+        for _, row in file_df.iterrows():
+            fig.add_trace(go.Scatter(x=[row["Detected Freq"]], y=[row["Correlation"]],
+                                     mode="markers", name=f"{row['Harmonic']} - {row['Critical']}"))
+        fig.update_layout(title=f"Analisi {file_key}", xaxis_title="Frequenza (Hz)", yaxis_title="Correlazione")
+        fig.write_image(f"{file_key}_analysis.png")
 
-# Esempio di utilizzo con i dati della simulazione
+    # Istogramma distribuzione
+    f_scaled = df["Detected Freq"] / df["Theoretical Freq"] * 14.1347
+    z_zeros = [float(zetazero(i).imag) for i in range(1, 11)]
+    fig_dist = go.Figure()
+    fig_dist.add_trace(go.Histogram(x=f_scaled, nbinsx=50, name="Frequenze scalate"))
+    fig_dist.add_trace(go.Histogram(x=z_zeros, nbinsx=50, name="Zeri Zeta", opacity=0.5))
+    fig_dist.update_layout(title="Distribuzione Frequenze Scalate vs Zeri Zeta",
+                           xaxis_title="Valore", yaxis_title="Conteggio",
+                           annotations=[dict(x=0.9, y=0.9, xref="paper", yref="paper",
+                                             text=f"KS p-value: {stats['ks_pvalue']:.3f}", showarrow=False)])
+    fig_dist.write_image("validation_summary_6205.png")
+
 if __name__ == "__main__":
-    from backend.simulations.wormhole_zeta import WormholeZetaSimulation
-    sim = WormholeZetaSimulation(zero_index=1)
-    data = sim.calculate_metric()
-    fig = create_wormhole_plot(data['r'], data['b_r'], data['Phi_r'], data['b0'], data['t_n'])
-    fig.show()
+    df = pd.read_csv("validation_summary_6205.csv")
+    with open("validation_stats.json", "r") as f:
+        import json
+        stats = json.load(f)
+    create_analysis_plots(df, stats)
