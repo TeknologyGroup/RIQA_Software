@@ -98,6 +98,5 @@ Future iterazioni di RIQA_Software approfondiranno queste questioni, integrando 
 
 - Morris, M. S., & Thorne, K. S. (1988). *Wormholes in spacetime and their use for interstellar travel: A tool for teaching general relativity*. American Journal of Physics.
 - Riemann, B. (1859). *Über die Anzahl der Primzahlen unter einer gegebenen Größe*.
-- `RIQA_Software` repository: [[link al repository GitHub](https://github.com/TeknologyGroup/RIQA_Software)
 
 ---
