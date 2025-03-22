@@ -46,4 +46,9 @@ def create_app():
 def create_app():
     app = Flask(__name__)
     metrics = PrometheusMetrics(app)
+    return from prometheus_flask_exporter import PrometheusMetrics
+
+def create_app():
+    app = Flask(__name__)
+    metrics = PrometheusMetrics(app)
     return app
