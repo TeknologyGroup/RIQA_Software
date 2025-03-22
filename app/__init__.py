@@ -51,4 +51,11 @@ def create_app():
 def create_app():
     app = Flask(__name__)
     metrics = PrometheusMetrics(app)
+    return from flasgger import Swagger
+
+def create_app():
+    app = Flask(__name__)
+    Swagger(app)
     return app
+    
+    
