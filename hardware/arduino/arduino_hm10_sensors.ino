@@ -190,3 +190,43 @@ void sendCompressedData(const String& sensorType, float value) {
     String data = sensorType + ":" + String(value, 2); // Limita a 2 decimali
     bleSerial.println(data);
 }
+
+### **5.1. Monitoraggio della Connessione**
+
+Implementa un sistema di monitoraggio per verificare lo stato della connessione BLE.
+
+```cpp
+// arduino_hm10_sensors.ino
+void checkConnection() {
+    if (!bleSerial.available()) {
+        logError("Connessione BLE persa");
+    }
+}
+
+void loop() {
+    checkConnection();
+    readAndSendSensorData();
+    delay(1000);
+}
+
+```
+
+### **5.2. Manutenzione Automatica**
+
+Implementa una manutenzione automatica per riavviare la connessione in caso di errori persistenti.
+
+```cpp
+// arduino_hm10_sensors.ino
+void resetConnection() {
+    bleSerial.end();
+    bleSerial.begin(9600);
+    logError("Connessione BLE riavviata");
+}
+
+void loop() {
+    if (!bleSerial.available()) {
+        resetConnection();
+    }
+    readAndSendSensorData();
+    delay(1000);
+}
