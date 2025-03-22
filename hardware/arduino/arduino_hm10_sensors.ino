@@ -1,9 +1,7 @@
-### **1.1. Integrazione di Sensori Aggiuntivi**
+### **1.1. Integrazione di Sensori Aggiuntivi** ###
 
-Aggiungi supporto per più sensori, come sensori di temperatura, umidità, pressione, ecc.
+#Aggiungi supporto per più sensori, come sensori di temperatura, umidità, pressione, ecc.#
 
-```cpp
-// arduino_hm10_sensors.ino
 #include <SoftwareSerial.h>
 #include <Wire.h>
 #include <MPU6050.h>
@@ -53,14 +51,11 @@ void loop() {
     delay(1000);
 }
 
-```
 
-### **1.2. Gestione di Più Sensori**
+### **1.2. Gestione di Più Sensori** ###
 
-Implementa una gestione modulare per i sensori, in modo da poter aggiungere o rimuovere sensori facilmente.
+#Implementa una gestione modulare per i sensori, in modo da poter aggiungere o rimuovere sensori facilmente.#
 
-```cpp
-// arduino_hm10_sensors.ino
 void readAndSendSensorData() {
     // Leggi e invia dati da tutti i sensori
     readAndSendAccelerometerData();
@@ -93,18 +88,13 @@ void loop() {
     delay(1000);
 }
 
-```
 
----
+### **2. Miglioramento della Gestione degli Errori** ###
 
-### **2. Miglioramento della Gestione degli Errori**
+### **2.1. Gestione degli Errori di Comunicazione** ###
 
-### **2.1. Gestione degli Errori di Comunicazione**
+#Implementa una gestione robusta degli errori di comunicazione, inclusi timeout e riconnessioni automatiche.#
 
-Implementa una gestione robusta degli errori di comunicazione, inclusi timeout e riconnessioni automatiche.
-
-```cpp
-// arduino_hm10_sensors.ino
 void setup() {
     Serial.begin(9600);
     bleSerial.begin(9600);
@@ -131,14 +121,10 @@ void loop() {
     delay(1000);
 }
 
-```
+### **2.2. Log degli Errori** ###
 
-### **2.2. Log degli Errori**
+#Aggiungi un sistema di logging per tracciare gli errori e facilitare il debug.#
 
-Aggiungi un sistema di logging per tracciare gli errori e facilitare il debug.
-
-```cpp
-// arduino_hm10_sensors.ino
 void logError(const String& errorMessage) {
     Serial.println("ERRORE: " + errorMessage);
     bleSerial.println("ERRORE: " + errorMessage);
@@ -156,18 +142,13 @@ void setup() {
     }
 }
 
-```
 
----
+### **3. Ottimizzazione della Comunicazione** ###
 
-### **3. Ottimizzazione della Comunicazione**
+### **3.1. Protocollo di Comunicazione** ###
 
-### **3.1. Protocollo di Comunicazione**
+#Definisci un protocollo di comunicazione strutturato per inviare e ricevere dati in modo efficiente.#
 
-Definisci un protocollo di comunicazione strutturato per inviare e ricevere dati in modo efficiente.
-
-```cpp
-// arduino_hm10_sensors.ino
 void sendData(const String& sensorType, float value) {
     String data = sensorType + ":" + String(value);
     bleSerial.println(data);
@@ -178,25 +159,19 @@ void loop() {
     delay(1000);
 }
 
-```
+### **3.2. Compressione dei Dati** ###
 
-### **3.2. Compressione dei Dati**
+#Implementa la compressione dei dati per ridurre il traffico sulla connessione BLE.#
 
-Implementa la compressione dei dati per ridurre il traffico sulla connessione BLE.
-
-```cpp
-// arduino_hm10_sensors.ino
 void sendCompressedData(const String& sensorType, float value) {
     String data = sensorType + ":" + String(value, 2); // Limita a 2 decimali
     bleSerial.println(data);
 }
 
-### **5.1. Monitoraggio della Connessione**
+### **5.1. Monitoraggio della Connessione** ###
 
-Implementa un sistema di monitoraggio per verificare lo stato della connessione BLE.
+#Implementa un sistema di monitoraggio per verificare lo stato della connessione BLE.#
 
-```cpp
-// arduino_hm10_sensors.ino
 void checkConnection() {
     if (!bleSerial.available()) {
         logError("Connessione BLE persa");
@@ -209,14 +184,10 @@ void loop() {
     delay(1000);
 }
 
-```
+### **5.2. Manutenzione Automatica** ###
 
-### **5.2. Manutenzione Automatica**
+#Implementa una manutenzione automatica per riavviare la connessione in caso di errori persistenti.#
 
-Implementa una manutenzione automatica per riavviare la connessione in caso di errori persistenti.
-
-```cpp
-// arduino_hm10_sensors.ino
 void resetConnection() {
     bleSerial.end();
     bleSerial.begin(9600);
