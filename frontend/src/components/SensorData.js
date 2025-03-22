@@ -1,3 +1,5 @@
+# Utilizza il frontend per inviare i dati dei sensori al backend#
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
