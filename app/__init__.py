@@ -56,6 +56,28 @@ def create_app():
 def create_app():
     app = Flask(__name__)
     Swagger(app)
+    return import logging
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+
+def create_app():
+    app = Flask(__name__)
+
+    # Configurazione del logging per SQLAlchemy
+    logging.basicConfig()
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
+    @event.listens_for(Engine, "before_cursor_execute")
+    def before_cursor_execute(conn, cursor, statement, parameters, context, executemany):
+        app.logger.info(f"Esecuzione query: {statement} con parametri {parameters}")
+
+    return from prometheus_flask_exporter import PrometheusMetrics
+
+def create_app():
+    app = Flask(__name__)
+    metrics = PrometheusMetrics(app)
     return app
+
+
     
     
