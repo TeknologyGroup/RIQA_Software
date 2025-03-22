@@ -104,3 +104,75 @@ La figura seguente mostra la distribuzione dei primi 10 zeri non banali di \\( \
 \\end{figure}
 
 \\end{document}
+
+\\documentclass[11pt]{article}
+\\usepackage{amsmath}
+\\usepackage{amssymb}
+\\usepackage{geometry}
+\\geometry{a4paper, margin=1in}
+
+\\begin{document}
+
+\\title{Formule Matematiche di RIQA\\_Software}
+\\author{Martino Battista}
+\\date{20 Marzo 2025}
+\\maketitle
+
+\\begin{abstract}
+Questo documento raccoglie le equazioni matematiche principali utilizzate nel progetto RIQA\\_Software, che esplora la connessione tra la metrica dei wormhole attraversabili e gli zeri non banali della funzione zeta di Riemann. Le formule sono presentate con derivazioni semplificate e riferimenti al codice del progetto.
+\\end{abstract}
+
+\\section{Metrica del Wormhole}
+La metrica di un wormhole attraversabile, secondo Morris e Thorne, è definita come:
+\\begin{equation}
+ds^2 = -e^{2\\Phi(r)} dt^2 + \\frac{dr^2}{1 - \\frac{b(r)}{r}} + r^2 (d\\theta^2 + \\sin^2\\theta \\, d\\phi^2),
+\\label{eq:metric}
+\\end{equation}
+dove:
+\\begin{itemize}
+    \\item \\( \\Phi(r) \\): Potenziale di redshift, assunto come \\( \\Phi(r) = -\\frac{b_0}{r} \\),
+    \\item \\( b(r) \\): Funzione di forma, semplificata a \\( b(r) = b_0 \\) (costante),
+    \\item \\( r \\): Coordinata radiale, con \\( r \\geq b_0 \\),
+    \\item \\( b_0 \\): Raggio della gola, proposto come \\( b_0 = t_n \\), dove \\( t_n \\) è la parte immaginaria di uno zero non banale di \\( \\zeta(s) \\).
+\\end{itemize}
+
+\\subsection{Esempio Pratico}
+Consideriamo un wormhole con \\( b_0 = 14.1347 \\) (corrispondente al primo zero non banale di \\( \\zeta(s) \\)). La metrica diventa:
+\\begin{equation}
+ds^2 = -e^{-\\frac{28.2694}{r}} dt^2 + \\frac{dr^2}{1 - \\frac{14.1347}{r}} + r^2 (d\\theta^2 + \\sin^2\\theta \\, d\\phi^2).
+\\end{equation}
+Questa metrica può essere utilizzata per simulare la geometria del wormhole nel software RIQA.
+
+\\section{Funzione Zeta di Riemann}
+La funzione zeta è definita per \\( \\text{Re}(s) > 1 \\) come:
+\\begin{equation}
+\\zeta(s) = \\sum_{n=1}^\\infty \\frac{1}{n^s} = \\prod_{p \\text{ primo}} \\left(1 - p^{-s}\\right)^{-1},
+\\label{eq:zeta}
+\\end{equation}
+e continuata analiticamente per tutto \\( \\mathbb{C} \\). Gli zeri non banali si trovano sulla linea critica:
+\\begin{equation}
+s = \\frac{1}{2} + i t_n, \\quad t_1 \\approx 14.1347, \\quad t_2 \\approx 21.0220, \\ldots
+\\label{eq:zeros}
+\\end{equation}
+
+\\subsection{Esempio Pratico}
+Calcoliamo i primi 10 zeri non banali di \\( \\zeta(s) \\) e utilizziamoli per determinare i raggi della gola \\( b_0 \\) di altrettanti wormhole:
+\\begin{equation}
+b_0^{(n)} = t_n, \\quad n = 1, 2, \\ldots, 10.
+\\end{equation}
+Questi valori possono essere utilizzati per simulare diverse configurazioni di wormhole nel software RIQA.
+
+\\end{document}
+
+\\subsection{Visualizzazione Interattiva}
+La figura seguente mostra la distribuzione dei primi 10 zeri non banali di \\( \\zeta(s) \\) sulla linea critica:
+
+\\begin{figure}[h]
+\\centering
+\\includegraphics[width=0.8\\textwidth]{zeta_zeros.png}
+\\caption{Distribuzione dei primi 10 zeri non banali di \\( \\zeta(s) \\).}
+\\label{fig:zeta_zeros}
+\\end{figure}
+
+
+
