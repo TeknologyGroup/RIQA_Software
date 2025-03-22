@@ -101,3 +101,46 @@ def create_evolution_plot(time: list, frequency: list, theme: str = 'plotly_whit
     )
 
     return fig
+    
+    #animazioni per mostrare l'evoluzione dei dati nel tempo.
+    def create_animated_evolution_plot(time: list, frequency: list) -> go.Figure:
+    """
+    Crea un grafico animato dell'evoluzione allelica.
+
+    Args:
+        time: Lista dei tempi.
+        frequency: Lista delle frequenze alleliche.
+
+    Returns:
+        Oggetto Figure di Plotly con animazione.
+    """
+    fig = go.Figure()
+
+    # Aggiungi traccia animata
+    fig.add_trace(go.Scatter(
+        x=time,
+        y=frequency,
+        mode='lines',
+        name='Frequenza Allelica',
+        line=dict(color='royalblue', width=2)
+    ))
+
+    # Aggiungi fotogrammi per l'animazione
+    frames = [go.Frame(data=[go.Scatter(x=time[:i], y=frequency[:i]) for i in range(1, len(time))]
+
+    # Configura l'animazione
+    fig.frames = frames
+    fig.update_layout(
+        updatemenus=[dict(
+            type="buttons",
+            buttons=[dict(label="Play",
+                         method="animate",
+                         args=[None, {"frame": {"duration": 100, "redraw": True}}])],
+            direction="left",
+            showactive=False,
+            x=1.0,
+            y=1.1
+        )]
+    )
+
+    return fig
