@@ -1,14 +1,21 @@
-# app/api/simulations.py
-from flask import Blueprint, request, jsonify
-from flask_caching import Cache
-from app.services.evolution import run_evolution_simulation
-from app.utils.cache import cache
+app/api/simulations.py
+from marshmallow import Schema, fields, ValidationError
 
-simulations_bp = Blueprint('simulations', __name__)
+class SimulationParametersSchema(Schema):
+    mu = fields.Float(required=True)
+    s = fields.Float(required=True)
+    N = fields.Int(required=True)
+    m = fields.Float(required=True)
+    p_migrante = fields.Float(required=True)
+    p0 = fields.Float(required=True)
+    t_max = fields.Int(required=True)
 
 @simulations_bp.route('/simulate', methods=['POST'])
-@cache.cached(timeout=300, key_prefix=lambda: request.json['parameters'])
 def simulate():
-    parameters = request.json['parameters']
+    try:
+        parameters = SimulationParametersSchema().load(request.json['parameters'])
+    except ValidationError as err:
+        return jsonify({'error': 'Invalid parameters', 'messages': err.messages}), 400
+
     result = run_evolution_simulation(parameters)
     return jsonify(result)
