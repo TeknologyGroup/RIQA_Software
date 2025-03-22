@@ -201,3 +201,72 @@ void loop() {
     readAndSendSensorData();
     delay(1000);
 }
+
+### **3.1. Aggiunta di Supporto per Più Sensori** ###
+
+#Integra più sensori, come un sensore di temperatura (DHT22) e un sensore di umidità del suolo, oltre all'accelerometro MPU-6050.#
+
+#include <SoftwareSerial.h>
+#include <Wire.h>
+#include <MPU6050.h>
+#include <DHT.h>
+
+#define DHTPIN 2
+#define DHTTYPE DHT22
+#define SOIL_MOISTURE_PIN A0
+
+SoftwareSerial bleSerial(10, 11); // RX | TX
+MPU6050 mpu;
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+    Serial.begin(9600);
+    bleSerial.begin(9600);
+    Wire.begin();
+    mpu.initialize();
+    dht.begin();
+
+    if (!mpu.testConnection()) {
+        Serial.println("Errore MPU6050");
+        bleSerial.println("Errore MPU6050");
+    }
+}
+
+void loop() {
+    // Leggi dati accelerometro
+    int16_t ax, ay, az;
+    mpu.getAcceleration(&ax, &ay, &az);
+    float accel = sqrt(ax*ax + ay*ay + az*az) / 16384.0 * 9.81;
+
+    // Leggi dati temperatura e umidità
+    float temperature = dht.readTemperature();
+    float humidity = dht.readHumidity();
+
+    // Leggi umidità del suolo
+    int soilMoisture = analogRead(SOIL_MOISTURE_PIN);
+
+    // Invia dati via BLE
+    bleSerial.print("ACCEL:");
+    bleSerial.println(accel);
+    bleSerial.print("TEMP:");
+    bleSerial.println(temperature);
+    bleSerial.print("HUMID:");
+    bleSerial.println(humidity);
+    bleSerial.print("SOIL:");
+    bleSerial.println(soilMoisture);
+
+    delay(1000); // Ritardo per evitare sovraccarico
+}
+
+### **3.2. Calibrazione Automatica**###
+
+#Implementa una calibrazione automatica per l'accelerometro MPU-6050.#
+
+void calibrateMPU6050() {
+    mpu.CalibrateAccel(6);
+    mpu.CalibrateGyro(6);
+    Serial.println("Calibrazione MPU6050 completata");
+    bleSerial.println("Calibrazione MPU6050 completata");
+}
+
+```
