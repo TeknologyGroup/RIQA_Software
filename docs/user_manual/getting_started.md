@@ -1,6 +1,4 @@
 
-##### **1.2.3. Guida Introduttiva**
-```markdown
 # Guida Introduttiva
 
 ## Avvio di una Simulazione
