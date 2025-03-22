@@ -122,3 +122,48 @@ function Wormhole3D({ simulationData }) {
 }
 
 export default Wormhole3D;
+
+#Consenti agli utenti di interagire con i modelli 3D (es. zoom, rotazione, selezione di punti)#
+
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
+function Wormhole3D({ simulationData }) {
+    const mountRef = useRef(null);
+
+    useEffect(() => {
+        const { r, b_r, Phi_r, b0 } = simulationData;
+
+        // Configurazione scena
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);
+        mountRef.current.appendChild(renderer.domElement);
+
+        // Aggiungi controlli orbit
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.enableZoom = true;
+
+        // Geometria e animazione (come sopra)
+        // ...
+
+        // Animazione con controlli
+        const animate = () => {
+            requestAnimationFrame(animate);
+            controls.update(); // Aggiorna i controlli
+            renderer.render(scene, camera);
+        };
+        animate();
+
+        // Cleanup
+        return () => {
+            mountRef.current.removeChild(renderer.domElement);
+        };
+    }, [simulationData]);
+
+    return <div ref={mountRef} style={{ width: '100%', height: '100%' }} />;
+}
+
+export default Wormhole3D;
