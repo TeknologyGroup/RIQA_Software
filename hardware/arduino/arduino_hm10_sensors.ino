@@ -1,5 +1,9 @@
-#supporto per più sensori, come sensori di temperatura, umidità, pressione, ecc.#
+### **1.1. Integrazione di Sensori Aggiuntivi**
 
+Aggiungi supporto per più sensori, come sensori di temperatura, umidità, pressione, ecc.
+
+```cpp
+// arduino_hm10_sensors.ino
 #include <SoftwareSerial.h>
 #include <Wire.h>
 #include <MPU6050.h>
@@ -49,8 +53,14 @@ void loop() {
     delay(1000);
 }
 
-# gestione modulare per i sensori, in modo da poter aggiungere o rimuovere sensori facilmente#
+```
 
+### **1.2. Gestione di Più Sensori**
+
+Implementa una gestione modulare per i sensori, in modo da poter aggiungere o rimuovere sensori facilmente.
+
+```cpp
+// arduino_hm10_sensors.ino
 void readAndSendSensorData() {
     // Leggi e invia dati da tutti i sensori
     readAndSendAccelerometerData();
@@ -83,8 +93,18 @@ void loop() {
     delay(1000);
 }
 
-# gestione robusta degli errori di comunicazione, inclusi timeout e riconnessioni automatiche#
+```
 
+---
+
+### **2. Miglioramento della Gestione degli Errori**
+
+### **2.1. Gestione degli Errori di Comunicazione**
+
+Implementa una gestione robusta degli errori di comunicazione, inclusi timeout e riconnessioni automatiche.
+
+```cpp
+// arduino_hm10_sensors.ino
 void setup() {
     Serial.begin(9600);
     bleSerial.begin(9600);
@@ -110,8 +130,15 @@ void loop() {
     readAndSendSensorData();
     delay(1000);
 }
-# sistema di logging per tracciare gli errori e facilitare il debug#
 
+```
+
+### **2.2. Log degli Errori**
+
+Aggiungi un sistema di logging per tracciare gli errori e facilitare il debug.
+
+```cpp
+// arduino_hm10_sensors.ino
 void logError(const String& errorMessage) {
     Serial.println("ERRORE: " + errorMessage);
     bleSerial.println("ERRORE: " + errorMessage);
@@ -129,8 +156,18 @@ void setup() {
     }
 }
 
-#protocollo di comunicazione strutturato per inviare e ricevere dati in modo efficiente#
+```
 
+---
+
+### **3. Ottimizzazione della Comunicazione**
+
+### **3.1. Protocollo di Comunicazione**
+
+Definisci un protocollo di comunicazione strutturato per inviare e ricevere dati in modo efficiente.
+
+```cpp
+// arduino_hm10_sensors.ino
 void sendData(const String& sensorType, float value) {
     String data = sensorType + ":" + String(value);
     bleSerial.println(data);
@@ -141,10 +178,15 @@ void loop() {
     delay(1000);
 }
 
-# Implementa la compressione dei dati per ridurre il traffico sulla connessione BLE.#
+```
 
+### **3.2. Compressione dei Dati**
+
+Implementa la compressione dei dati per ridurre il traffico sulla connessione BLE.
+
+```cpp
+// arduino_hm10_sensors.ino
 void sendCompressedData(const String& sensorType, float value) {
     String data = sensorType + ":" + String(value, 2); // Limita a 2 decimali
     bleSerial.println(data);
 }
-
