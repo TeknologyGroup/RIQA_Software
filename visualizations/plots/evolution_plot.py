@@ -46,7 +46,7 @@ def create_evolution_plot(time: list, frequency: list) -> go.Figure:
     
     return fig
     
-    # visualizations/plots/evolution_plot.py
+    # opzioni di personalizzazione per i grafici, come la scelta di colori, stili e temi.
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
