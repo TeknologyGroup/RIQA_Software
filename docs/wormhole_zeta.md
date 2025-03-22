@@ -84,6 +84,46 @@ Il software utilizza un sensore MPU-6050 collegato a un Arduino con modulo HM-10
 
 ---
 
+## Casi d'Uso
+
+### Simulazione di un Wormhole con \\( b_0 = 14.1347 \\)
+Nel software RIQA, è possibile simulare un wormhole con \\( b_0 = 14.1347 \\), corrispondente al primo zero non banale di \\( \\zeta(s) \\). La metrica risultante può essere visualizzata in 3D e analizzata per studiare la stabilità della gola.
+
+### Correlazione con Dati Sperimentali
+I dati raccolti dai sensori hardware possono essere correlati con i valori teorici di \\( b_0 \\) per verificare l'ipotesi di una connessione tra \\( \\zeta(s) \\) e la geometria dei wormhole.
+
+---
+
+## Visualizzazioni Interattive
+
+### Grafico della Funzione Zeta
+La figura seguente mostra un grafico interattivo della funzione zeta di Riemann lungo la linea critica:
+
+![Grafico della Funzione Zeta](zeta_plot.png)
+
+### Modello 3D di un Wormhole
+Il software RIQA include un modello 3D interattivo di un wormhole, che può essere esplorato per studiare la geometria della gola.
+
+---
+
+## Conclusioni
+
+L’integrazione di teorie matematiche avanzate con simulazioni numeriche e visualizzazioni interattive rende RIQA\\_Software uno strumento potente per esplorare la connessione tra i wormhole e la funzione zeta di Riemann. I casi d'uso e le visualizzazioni interattive facilitano la comprensione e l'applicazione pratica di queste teorie.
+
+---
+
+## Visualizzazioni Interattive
+
+### Grafico della Funzione Zeta
+La figura seguente mostra un grafico interattivo della funzione zeta di Riemann lungo la linea critica:
+
+```html
+<iframe src="zeta_plot.html" width="100%" height="500px"></iframe>
+
+<iframe src="wormhole_3d.html" width="100%" height="500px"></iframe>
+
+---
+
 ## Domande Aperte
 
 - Gli zeri di \( \zeta(s) \) possono essere mappati su proprietà fisiche misurabili dei wormhole?
