@@ -34,3 +34,13 @@ function Home() {
 }
 
 export default Home;
+
+<h2>Simulazioni</h2>
+<p>
+  Avvia una simulazione inserendo un indice dello zero non banale (es. "1" per \( t_1 \approx 14.1347 \)) nel form e cliccando "Esegui Simulazione".
+</p>
+
+<h2>Visualizzazioni</h2>
+<p>
+  Esplora i risultati delle simulazioni con grafici 2D interattivi e modelli 3D dinamici della geometria wormhole.
+</p>
