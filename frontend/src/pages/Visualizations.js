@@ -1,12 +1,17 @@
 import React from 'react';
+import Wormhole3D from '../components/Wormhole3D';
 
-const Visualizations = () => {
+function Visualizations({ simulationData }) {
   return (
-    <div>
-      <h1>Visualizations Page</h1>
-      <p>Explore visualizations here.</p>
+    <div style={{ padding: '20px' }}>
+      <h1>Visualizzazioni</h1>
+      {simulationData ? (
+        <Wormhole3D simulationData={simulationData} />
+      ) : (
+        <p>Nessun dato di simulazione disponibile. Esegui una simulazione dalla pagina "Simulazioni".</p>
+      )}
     </div>
   );
-};
+}
 
 export default Visualizations;
