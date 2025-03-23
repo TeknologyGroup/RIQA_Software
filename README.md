@@ -39,62 +39,152 @@ RIQA_Software/├── frontend/                  # Interfaccia utente basata s
 
 ## Installazione
 
-1. **Clona il Repository**:
-   ```bash
-   git clone https://github.com/[tuo-username]/RIQA_Software.git
-   cd RIQA_Software
+Per avviare il progetto **RIQA_Software** su un terminale Linux (Debian) su Chromebook, segui questi passaggi passo dopo passo. Assicurati di avere già configurato l'ambiente Linux sul tuo Chromebook e di avere installato i prerequisiti necessari (Python, Node.js, Flutter, Arduino IDE, ecc.).
 
-	1.	Installa il Backend:
+---
+
+### **1. Clona il Repository**
+Apri il terminale Linux e clona il repository GitHub del progetto:
+
+```bash
+git clone https://github.com/[tuo-username]/RIQA_Software.git
+cd RIQA_Software
+```
+
+Sostituisci `[tuo-username]` con il tuo username GitHub o l'URL corretto del repository.
+
+---
+
+### **2. Installa le Dipendenze del Backend**
+Installa le dipendenze Python necessarie per il backend Flask:
+
+```bash
 pip install -r requirements.txt
+```
+
+Se non hai `pip` installato, puoi installarlo con:
+
+```bash
+sudo apt update
+sudo apt install python3-pip
+```
+
+---
+
+### **3. Avvia il Backend**
+Avvia il server Flask per il backend:
+
+```bash
 python backend/main.py
+```
 
-	2.	Installa il Frontend:
+Il server Flask dovrebbe avviarsi e rimanere in esecuzione in attesa di richieste. Tieni aperto questo terminale.
+
+---
+
+### **4. Installa le Dipendenze del Frontend**
+Apri un nuovo terminale (o una nuova scheda del terminale) e naviga nella cartella `frontend`:
+
+```bash
 cd frontend
+```
+
+Installa le dipendenze Node.js per il frontend React:
+
+```bash
 npm install
+```
+
+Installa anche la libreria `three.js` per le visualizzazioni 3D:
+
+```bash
 npm install three
+```
+
+---
+
+### **5. Avvia il Frontend**
+Avvia il server di sviluppo React:
+
+```bash
 npm start
+```
 
-	3.	Configura l’Hardware (opzionale):
-	•	Carica hardware/mobile_integration/bluetooth/arduino_hm10_sensors.ino su un Arduino con HM-10 e MPU-6050.
-	•	Esegui:
-python backend/mobile_data.py
+Questo aprirà automaticamente il frontend nel browser predefinito all'indirizzo `http://localhost:3000`. Se non si apre automaticamente, puoi accedervi manualmente.
 
-	4.	Configura l’App Mobile (opzionale):
-	•	Installa Flutter e apri hardware/mobile_integration/mobile_app/.
-	•	Esegui:
-flutter run
+---
 
+### **6. Configura l'Hardware (Opzionale)**
+Se desideri utilizzare l'hardware (Arduino con modulo HM-10 e sensore MPU-6050), segui questi passaggi:
 
-Utilizzo
+1. **Carica il Codice su Arduino**:
+   - Apri il file `hardware/mobile_integration/bluetooth/arduino_hm10_sensors.ino` nell'Arduino IDE.
+   - Collega l'Arduino al Chromebook e carica il codice.
 
-	1.	Avvia una Simulazione:
-	•	Apri il frontend (http://localhost:3000), vai alla pagina “Simulations”.
-	•	Inserisci un indice dello zero non banale (es. “1” per ( t_1 \approx 14.1347 )) nel form e clicca “Esegui Simulazione”.
-	•	Oppure usa l’assistente vocale con “Simula wormhole con zero [numero]”.
-	2.	Visualizza i Risultati:
-	•	Grafici 2D della metrica (es. ( b(r) ), ( \Phi(r) )) con Plotly.
-	•	Modello 3D interattivo della gola del wormhole con Three.js.
-	3.	Raccogli Dati dai Sensori:
-	•	Connetti l’Arduino e avvia mobile_data.py per correlare dati fisici (es. accelerazione) con ( b_0 ).
+2. **Avvia la Gestione dei Dati**:
+   Torna al terminale principale (dove hai clonato il repository) e avvia lo script Python per la gestione dei dati:
 
-Fondamenti Teorici
+   ```bash
+   python backend/mobile_data.py
+   ```
 
-La metrica di un wormhole attraversabile è definita come:[ds^2 = -e^{2\Phi(r)} dt^2 + \frac{dr^2}{1 - \frac{b(r)}{r}} + r^2 (d\theta^2 + \sin^2\theta , d\phi^2),]dove ( b_0 = t_n ) (es. ( t_1 \approx 14.1347 )) è derivato dagli zeri non banali di ( \zeta(s) ).
+---
 
-L’ipotesi propone:[\zeta(s) = \int_{\partial M} O(x)^s , d\mu(x),]con ( O(x) ) come curvatura scalare ( R \approx \frac{4 b_0}{r^3} ), suggerendo che gli zeri stabilizzano la geometria.
+### **7. Configura l'App Mobile (Opzionale)**
+Se desideri utilizzare l'app mobile Flutter:
 
-Per dettagli, consulta docs/wormhole_zeta.md e docs/formulas.tex.
+1. Installa Flutter sul Chromebook (se non lo hai già fatto):
+   - Segui la guida ufficiale: https://flutter.dev/docs/get-started/install/linux
 
-Applicazioni
+2. Naviga nella cartella dell'app mobile:
 
-	•	Ricerca: Esplorazione di connessioni tra ( \zeta(s) ) e relatività generale.
-	•	Educazione: Strumento per insegnare fisica teorica e matematica avanzata.
-	•	Prototipazione: Test di correlazioni fisiche con dati sperimentali.
+   ```bash
+   cd hardware/mobile_integration/mobile_app/
+   ```
 
-Contributi
+3. Installa le dipendenze Flutter:
 
-Contributi sono benvenuti! Apri una pull request o segnala un problema (issue) su GitHub. Per collaborazioni, contatta genesis-quantum@proton.me martinobattista@gmail.com
+   ```bash
+   flutter pub get
+   ```
 
-Licenza
+4. Avvia l'app:
 
-Questo progetto è distribuito sotto la licenza MIT. Vedi il file LICENSE per dettagli.
+   ```bash
+   flutter run
+   ```
+
+---
+
+### **8. Utilizzo del Software**
+Ora che tutto è configurato, puoi utilizzare il software:
+
+1. **Frontend**:
+   - Apri `http://localhost:3000` nel browser.
+   - Vai alla pagina "Simulations" e inserisci un indice dello zero non banale (es. "1" per \( t_1 \approx 14.1347 \)) nel form.
+   - Clicca "Esegui Simulazione" per avviare la simulazione.
+
+2. **Visualizzazione**:
+   - I grafici 2D della metrica verranno visualizzati con Plotly.
+   - Il modello 3D interattivo del wormhole verrà visualizzato con Three.js.
+
+3. **Dati Hardware**:
+   - Se hai configurato l'hardware, i dati dei sensori verranno raccolti e correlati con i parametri della simulazione.
+
+---
+
+### **9. Debug e Risoluzione dei Problemi**
+- Se incontri errori, verifica che tutte le dipendenze siano installate correttamente.
+- Controlla che i server Flask e React siano in esecuzione.
+- Se utilizzi l'hardware, assicurati che l'Arduino sia correttamente collegato e configurato.
+
+---
+
+### **10. Fermare i Servizi**
+Per fermare i servizi:
+- Premi `Ctrl + C` nei terminali dove sono in esecuzione Flask (`backend/main.py`) e React (`npm start`).
+
+---
+
+Seguendo questi passaggi, dovresti essere in grado di avviare e utilizzare il progetto **RIQA_Software** sul tuo Chromebook con Linux Debian.
+
