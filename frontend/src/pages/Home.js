@@ -1,46 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Simulations from './pages/Simulations';
+import Visualizations from './pages/Visualizations';
+import HardwareIntegration from './pages/HardwareIntegration';
+import MobileApp from './pages/MobileApp';
+import Documentation from './pages/Documentation';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
-function Home() {
+function App() {
+  const [simulationData, setSimulationData] = useState(null); // Stato per i dati della simulazione
+
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h1>Benvenuto in RIQA_Software</h1>
-      <p>Simulazione di Wormhole e Zeri della Funzione Zeta di Riemann</p>
+    <Router>
+      <div className="app-container">
+        <Navbar /> {/* Barra di navigazione */}
+        <Routes>
+          {/* Pagina principale */}
+          <Route path="/" element={<Home />} />
 
-      <h2>Panoramica del Progetto</h2>
-      <p>
-        RIQA_Software è un framework modulare open-source progettato per esplorare la connessione teorica tra i wormhole attraversabili della relatività generale e gli zeri non banali della funzione zeta di Riemann.
-      </p>
+          {/* Pagina delle simulazioni */}
+          <Route
+            path="/simulations"
+            element={<Simulations setSimulationData={setSimulationData} />}
+          />
 
-      <h2>Caratteristiche Principali</h2>
-      <ul style={{ textAlign: 'left', margin: '0 auto', maxWidth: '600px' }}>
-        <li><strong>Simulazioni Numeriche</strong>: Calcolo della metrica di wormhole con parametri influenzati dagli zeri di ζ(s).</li>
-        <li><strong>Visualizzazioni</strong>: Grafici 2D interattivi (Plotly) e modelli 3D dinamici (Three.js) della geometria wormhole.</li>
-        <li><strong>Integrazione Hardware</strong>: Raccolta dati in tempo reale da sensori (es. accelerometro MPU-6050) tramite Bluetooth Low Energy (BLE).</li>
-        <li><strong>Controllo Vocale</strong>: Interfaccia assistente per avviare simulazioni con comandi vocali.</li>
-        <li><strong>Database</strong>: Archiviazione strutturata di risultati e dati sperimentali con SQLite.</li>
-      </ul>
+          {/* Pagina delle visualizzazioni */}
+          <Route
+            path="/visualizations"
+            element={<Visualizations simulationData={simulationData} />}
+          />
 
-      <h2>Struttura del Progetto</h2>
-      <p>
-        Il progetto è organizzato in modo modulare, con una chiara separazione tra frontend, backend, database e integrazione hardware. Per ulteriori dettagli, consulta la documentazione.
-      </p>
+          {/* Pagina di integrazione hardware */}
+          <Route path="/hardware" element={<HardwareIntegration />} />
 
-      <h2>Come Contribuire</h2>
-      <p>
-        Se sei interessato a contribuire al progetto, visita il repository GitHub e segui le istruzioni per aprire una pull request o segnalare un problema.
-      </p>
-    </div>
+          {/* Pagina dell'app mobile */}
+          <Route path="/mobile-app" element={<MobileApp />} />
+
+          {/* Pagina della documentazione */}
+          <Route path="/docs" element={<Documentation />} />
+        </Routes>
+        <Footer /> {/* Footer */}
+      </div>
+    </Router>
   );
 }
 
-export default Home;
-
-<h2>Simulazioni</h2>
-<p>
-  Avvia una simulazione inserendo un indice dello zero non banale (es. "1" per \( t_1 \approx 14.1347 \)) nel form e cliccando "Esegui Simulazione".
-</p>
-
-<h2>Visualizzazioni</h2>
-<p>
-  Esplora i risultati delle simulazioni con grafici 2D interattivi e modelli 3D dinamici della geometria wormhole.
-</p>
+export default App;
