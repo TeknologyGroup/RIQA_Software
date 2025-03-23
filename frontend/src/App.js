@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Lazy loading delle pagine
 const Home = lazy(() => import('./pages/Home'));
@@ -31,24 +31,6 @@ function App() {
           </Routes>
         </Layout>
       </Suspense>
-    </Router>
-  );
-}
-
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home'; // Verifica che il percorso sia corretto
-import Simulations from './pages/Simulations'; // Verifica che il percorso sia corretto
-import Visualizations from './pages/Visualizations'; // Verifica che il percorso sia corretto
-
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/simulations" element={<Simulations />} />
-        <Route path="/visualizations" element={<Visualizations />} />
-      </Routes>
     </Router>
   );
 }
