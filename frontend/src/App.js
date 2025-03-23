@@ -35,4 +35,22 @@ function App() {
   );
 }
 
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home'; // Verifica che il percorso sia corretto
+import Simulations from './pages/Simulations'; // Verifica che il percorso sia corretto
+import Visualizations from './pages/Visualizations'; // Verifica che il percorso sia corretto
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/simulations" element={<Simulations />} />
+        <Route path="/visualizations" element={<Visualizations />} />
+      </Routes>
+    </Router>
+  );
+}
+
 export default App;
