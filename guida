@@ -1,0 +1,246 @@
+# **Guida Sviluppatore per RIQA_Software**  
+**Versione 1.0**  
+*Ultimo aggiornamento: 24 Marzo 2025*  
+
+---
+
+## **Indice**  
+1. [Panoramica del Progetto](#panoramica-del-progetto)  
+2. [Struttura del Codice](#struttura-del-codice)  
+3. [Configurazione Iniziale](#configurazione-iniziale)  
+4. [Backend: API, Simulazioni e Database](#backend-api-simulazioni-e-database)  
+5. [AI Generativa e Ottimizzazione](#ai-generativa-e-ottimizzazione)  
+6. [Frontend: Visualizzazione e Grafici](#frontend-visualizzazione-e-grafici)  
+7. [Blockchain e Smart Contract](#blockchain-e-smart-contract)  
+8. [Testing e Validazione](#testing-e-validazione)  
+9. [Deploy con Docker](#deploy-con-docker)  
+10. [Roadmap Futura](#roadmap-futura)  
+
+---
+
+## **1. Panoramica del Progetto**  
+**RIQA_Software** è un framework open-source per:  
+- **Simulazioni scientifiche avanzate** (quantistiche, astrali, meteorologiche).  
+- **AI generativa** per creazione e ottimizzazione di codice.  
+- **Integrazione blockchain** (donazioni, calcolo distribuito).  
+- **Visualizzazione interattiva** con grafici 2D/3D.  
+
+---
+
+## **2. Struttura del Codice**  
+```
+RIQA_Software/  
+├── backend/                  # Core logico  
+│   ├── app.py                # Server Flask/FastAPI  
+│   ├── simulation.py         # Simulazioni numeriche  
+│   ├── quantum_interface.py  # Circuiti quantistici (Qiskit)  
+│   ├── zeta_calculations.py  # Matematica avanzata  
+│   └── tests/                # Test unitari  
+├── ai/                       # Moduli AI  
+│   ├── code_generator.py     # Generazione codice (Hugging Face)  
+│   └── optimizer.py          # Ottimizzazione codice  
+├── frontend/                 # Interfaccia utente  
+│   ├── src/  
+│   │   ├── components/       # Grafici Plotly/D3.js  
+│   │   └── stores/           # Gestione stato simulazioni  
+├── blockchain/               # Smart contract e Web3  
+│   ├── contracts/            # Solidity  
+│   └── web3/                 # Connessione a Polygon  
+├── config/                   # Variabili d'ambiente  
+└── docker-compose.yml        # Configurazione container  
+```
+
+---
+
+## **3. Configurazione Iniziale**  
+
+### **Prerequisiti**  
+- Python 3.10+  
+- Node.js 18+  
+- PostgreSQL 13+  
+- Docker (opzionale)  
+
+### **Setup**  
+1. Clona il repository:  
+   ```bash
+   git clone https://github.com/tuo-repo/RIQA_Software.git
+   cd RIQA_Software
+   ```
+
+2. Configura le variabili d'ambiente (`config/.env`):  
+   ```env
+   DATABASE_URL=postgresql://user:password@localhost:5432/riqa
+   HF_API_TOKEN=hf_tuo_token
+   POLYGON_RPC=https://rpc-mumbai.matic.today
+   ```
+
+3. Installa le dipendenze:  
+   ```bash
+   # Backend
+   pip install -r backend/requirements.txt
+
+   # Frontend
+   cd frontend && npm install
+   ```
+
+---
+
+## **4. Backend: API, Simulazioni e Database**  
+
+### **Endpoint Principali**  
+| Endpoint                 | Metodo | Descrizione                          |  
+|--------------------------|--------|--------------------------------------|  
+| `/submit_equation`       | POST   | Salva equazioni utente nel DB        |  
+| `/simulate`              | POST   | Avvia simulazioni (quantistiche, ecc.) |  
+| `/ws/simulation`         | WS     | Stream risultati in tempo reale      |  
+
+### **Esempio: Simulazione Quantistica**  
+```python
+# backend/quantum_interface.py
+from qiskit import QuantumCircuit, execute, Aer
+
+def run_quantum_simulation(params):
+    qc = QuantumCircuit(2)
+    qc.h(0)
+    qc.cx(0, 1)
+    qc.measure_all()
+    backend = Aer.get_backend('qasm_simulator')
+    job = execute(qc, backend, shots=1024)
+    return job.result().get_counts()
+```
+
+---
+
+## **5. AI Generativa e Ottimizzazione**  
+
+### **Generazione Codice con Hugging Face**  
+```python
+# ai/code_generator.py
+def generate_code(prompt):
+    response = requests.post(
+        "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
+        headers={"Authorization": f"Bearer {HF_API_TOKEN}"},
+        json={"inputs": prompt}
+    )
+    return response.json()[0]['generated_text']
+```
+
+### **Ottimizzazione Automatica**  
+```python
+# ai/optimizer.py
+from code_generator import generate_code
+
+def optimize_code(code):
+    prompt = f"Ottimizza questo codice Python:\n\n{code}"
+    return generate_code(prompt)
+```
+
+---
+
+## **6. Frontend: Visualizzazione e Grafici**  
+
+### **Grafici con Plotly.js**  
+```javascript
+// frontend/src/components/SimulationChart.vue
+<template>
+  <div>
+    <Plotly :data="plotData" :layout="layout" />
+  </div>
+</template>
+
+<script>
+import { Plotly } from 'vue-plotly'
+
+export default {
+  data() {
+    return {
+      plotData: [{ x: [1, 2, 3], y: [2, 4, 6], type: 'scatter' }],
+      layout: { title: 'Risultati Simulazione' }
+    }
+  }
+}
+</script>
+```
+
+---
+
+## **7. Blockchain e Smart Contract**  
+
+### **Contratto Solidity per Donazioni**  
+```solidity
+// blockchain/contracts/DonationContract.sol
+function donate() external payable {
+    totalDonations += msg.value;
+    emit Donated(msg.sender, msg.value);
+}
+```
+
+### **Connessione Frontend (Web3.js)**  
+```javascript
+// blockchain_app/src/utils/blockchain.js
+const donateToContract = async (amount) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const contract = new ethers.Contract(contractAddress, contractABI, provider.getSigner());
+  await contract.donate({ value: ethers.utils.parseEther(amount) });
+};
+```
+
+---
+
+## **8. Testing e Validazione**  
+
+### **Test Unitari (pytest)**  
+```python
+# backend/tests/test_quantum.py
+def test_quantum_simulation():
+    result = run_quantum_simulation(["h 0"])
+    assert "00" in result or "11" in result
+```
+
+### **Test Endpoint (Flask-Testing)**  
+```python
+# backend/tests/test_api.py
+def test_submit_equation(self):
+    response = self.client.post('/submit_equation', json={'equation': 'x^2'})
+    self.assertEqual(response.status_code, 200)
+```
+
+---
+
+## **9. Deploy con Docker**  
+
+### **docker-compose.yml**  
+```yaml
+services:
+  backend:
+    build: ./backend
+    ports: ["5000:5000"]
+  frontend:
+    build: ./frontend
+    ports: ["8080:80"]
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: secret
+```
+
+### **Comandi per il Deploy**  
+```bash
+docker-compose up --build
+```
+
+---
+
+## **10. Roadmap Futura**  
+- **Integrazione con chip quantistici reali** (Majorana/Willow).  
+- **Calcolo distribuito** su dispositivi utente.  
+- **Dashboard avanzata** per analisi dati.  
+
+---
+
+**Contribuisci su GitHub**: [github.com/tuo-repo/RIQA_Software](https://github.com/tuo-repo/RIQA_Software)  
+**Licenza**: MIT  
+
+Per domande: team@riqa-software.org  
+
+--- 
