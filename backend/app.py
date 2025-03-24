@@ -1,32 +1,20 @@
-from flask import Flask, jsonify, request
-from flask_socketio import SocketIO
-from database import save_experiment
-from simulation import simulate_trajectory, simulate_weather
-from quantum_interface import run_quantum_simulation
+# Import corretti con percorsi relativi
+from .database import init_db, fetch_papers, save_experiment
+from .data_fetcher import search_arxiv
+from .simulation import compute_simulation
+from .validation import validate_experiment
+from .websocket import socketio  # Se websocket.py è separato
 
-app = Flask(__name__)
-socketio = SocketIO(app)
+# Inizializza il database all'avvio
+init_db()  # Chiamata diretta a database.py
 
-@app.route('/submit_equation', methods=['POST'])
-def submit_equation():
-    equation = request.json.get('equation')
-    save_experiment({'type': 'user_equation', 'input': equation}, None)
-    return jsonify({'message': 'Equazione salvata'})
+# Esempio di endpoint che usa data_fetcher.py
+@app.route('/search_arxiv')
+def search():
+    return search_arxiv("quantum physics")  # Chiamata a data_fetcher.py
 
-@app.route('/simulate', methods=['POST'])
-def run_simulation():
+# Esempio di endpoint che usa validation.py
+@app.route('/validate', methods=['POST'])
+def validate_data():
     data = request.json
-    sim_type = data.get('type')
-    input_data = data.get('input')
-    
-    if sim_type == 'quantum':
-        result = run_quantum_simulation(input_data)
-    elif sim_type == 'trajectory':
-        result = simulate_trajectory(input_data)
-    else:
-        result = {"error": "Tipo di simulazione non supportato"}
-    
-    return jsonify(result)
-
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000)
+    return validate_experiment(data)  # Chiamata a validation.py
