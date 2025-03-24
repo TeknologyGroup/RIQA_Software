@@ -1,22 +1,36 @@
-# Import corretti con percorsi relativi
-from .database import init_db, fetch_papers, save_experiment
+from flask import Flask, jsonify, request
+from flask_socketio import SocketIO
+from .database import init_db
 from .data_fetcher import search_arxiv
 from .simulation import compute_simulation
 from .validation import validate_experiment
-from .websocket import socketio  # Se websocket.py è separato
-from .websocket import socketio
-socketio.init_app(app)  # Inizializza in app.py
 
-# Inizializza il database all'avvio
-init_db()  # Chiamata diretta a database.py
+# Inizializza Flask e SocketIO
+app = Flask(__name__)
+socketio = SocketIO(app)
 
-# Esempio di endpoint che usa data_fetcher.py
-@app.route('/search_arxiv')
+# Configurazione iniziale
+init_db()  # Inizializza il database
+
+# Route di esempio
+@app.route('/')
+def home():
+    return "Backend RIQA attivo!"
+
+@app.route('/search')
 def search():
-    return search_arxiv("quantum physics")  # Chiamata a data_fetcher.py
+    return search_arxiv("quantum physics")
 
-# Esempio di endpoint che usa validation.py
-@app.route('/validate', methods=['POST'])
-def validate_data():
+@app.route('/simulate', methods=['POST'])
+def simulate():
     data = request.json
-    return validate_experiment(data)  # Chiamata a validation.py
+    result = compute_simulation(data.get('input', []))
+    return jsonify(result)
+
+# WebSocket
+@socketio.on('connect')
+def handle_connect():
+    print("Client connesso via WebSocket")
+
+if __name__ == "__main__":
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
