@@ -4,6 +4,8 @@ from .data_fetcher import search_arxiv
 from .simulation import compute_simulation
 from .validation import validate_experiment
 from .websocket import socketio  # Se websocket.py è separato
+from .websocket import socketio
+socketio.init_app(app)  # Inizializza in app.py
 
 # Inizializza il database all'avvio
 init_db()  # Chiamata diretta a database.py
