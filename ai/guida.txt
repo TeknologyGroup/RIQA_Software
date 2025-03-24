@@ -1,0 +1,19 @@
+Istruzioni per l'Installazione
+
+Backend:
+bash
+Copy
+cd backend
+pip install -r requirements.txt
+python app.py
+Frontend:
+bash
+Copy
+cd frontend
+npm install
+npm run dev
+Blockchain:
+Deploya DonationContract.sol su Remix IDE (Polygon/Mumbai).
+Configura MetaMask con la rete Polygon.
+AI:
+Ottieni un token gratuito su Hugging Face.
