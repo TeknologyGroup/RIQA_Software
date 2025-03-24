@@ -1,18 +1,16 @@
 from flask import Flask, jsonify, request
 from flask_socketio import SocketIO
-from .database import init_db
-from .data_fetcher import search_arxiv
-from .simulation import compute_simulation
-from .validation import validate_experiment
+from database import init_db  # Cambiato da .database a database
+from data_fetcher import search_arxiv  # Cambiato da .data_fetcher
+from simulation import compute_simulation  # Cambiato da .simulation
+from validation import validate_experiment  # Cambiato da .validation
 
-# Inizializza Flask e SocketIO
 app = Flask(__name__)
 socketio = SocketIO(app)
 
 # Configurazione iniziale
-init_db()  # Inizializza il database
+init_db()
 
-# Route di esempio
 @app.route('/')
 def home():
     return "Backend RIQA attivo!"
@@ -27,7 +25,6 @@ def simulate():
     result = compute_simulation(data.get('input', []))
     return jsonify(result)
 
-# WebSocket
 @socketio.on('connect')
 def handle_connect():
     print("Client connesso via WebSocket")
