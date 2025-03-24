@@ -1,12 +1,18 @@
+# RIQA_Software/backend/database.py
 import sqlite3
-from sqlite3 import Error
-
-DB_PATH = 'riqa_data.db'  # Percorso relativo al file
 
 def init_db():
-    conn = sqlite3.connect(DB_PATH)  # Crea/collegati al database
-    cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS experiments
-                      (id INTEGER PRIMARY KEY, input TEXT, result TEXT)''')
+    conn = sqlite3.connect('riqa.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS papers
+                 (id INTEGER PRIMARY KEY, title TEXT, author TEXT)''')
     conn.commit()
     conn.close()
+
+def fetch_papers():  # Aggiungi questa funzione mancante
+    conn = sqlite3.connect('riqa.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM papers")
+    papers = c.fetchall()
+    conn.close()
+    return [{"id": p[0], "title": p[1], "author": p[2]} for p in papers]
