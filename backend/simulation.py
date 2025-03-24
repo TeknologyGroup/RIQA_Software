@@ -1,6 +1,9 @@
 import numpy as np
 from scipy.integrate import odeint
 
+def compute_simulation(input_data):
+    return np.array(input_data) ** 2  # Esempio di simulazione
+
 def simulate_trajectory(params):
     initial_position = params.get('initial_position', [0.0, 0.0])
     initial_velocity = params.get('initial_velocity', [10.0, 10.0])
