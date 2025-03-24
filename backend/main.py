@@ -2,6 +2,15 @@ from flask import Flask, request, jsonify
 from simulations.evolution import run_evolution_simulation
 from dotenv import load_dotenv
 import os
+from ai.file_manager import observer
+
+if __name__ == "__main__":
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
 
 # Carica variabili d'ambiente
 load_dotenv()
