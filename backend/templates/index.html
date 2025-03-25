@@ -1,9 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>RIQA AI</title>
-</head>
-<body>
-    <h1>La mia applicazione AI è pronta!</h1>
-</body>
-</html>
+<div id="ai-interface">
+    <textarea id="ai-input"></textarea>
+    <button onclick="processAI()">Processa</button>
+    <div id="ai-output"></div>
+</div>
+
+<script>
+async function processAI() {
+    const input = document.getElementById('ai-input').value;
+    const response = await fetch('/ai/process', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({input: input})
+    });
+    const result = await response.json();
+    document.getElementById('ai-output').innerText = result.result;
+}
+</script>
