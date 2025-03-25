@@ -7,9 +7,8 @@ class RIQAAI:
         self.generator = CodeGenerator()
         self.regenerator = CodeRegenerator()
         self.file_manager = FileManager()
-        
-    def generate_code(self, prompt):
-        """Coordina tutta la generazione del codice"""
+    
+    def generate(self, prompt: str) -> str:
+        """Pipeline completa di generazione"""
         raw_code = self.generator.generate(prompt)
-        optimized = self.regenerator.optimize(raw_code)
-        return optimized
+        return self.regenerator.optimize(raw_code)
