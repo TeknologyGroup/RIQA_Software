@@ -1,17 +1,22 @@
-import logging
-logging.basicConfig(level=logging.DEBUG)
-from flask import Flask, jsonify, request
+from flask import Flask, render_template
 from flask_socketio import SocketIO
-from database import init_db  # Cambiato da .database a database
-from data_fetcher import search_arxiv  # Cambiato da .data_fetcher
-from simulation import compute_simulation  # Cambiato da .simulation
-from validation import validate_experiment  # Cambiato da .validation
-from backend.database import init_db
-from backend.validation import validate_experiment
+from ai_engine import AIEngine
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+ai = AIEngine()
 
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@socketio.on('process_input')
+def handle_input(data):
+    result = ai.process(data['text'])
+    socketio.emit('ai_response', {'result': result})
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
 # Configurazione iniziale
 init_db()
 
