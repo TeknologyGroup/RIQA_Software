@@ -1,13 +1,22 @@
 import json
-import os
+from pathlib import Path
+from datetime import datetime
 
 class FileManager:
-    def save_generation_log(self, prompt: str, generated_code: str, timestamp: str):
-        log_entry = {
-            'timestamp': timestamp,
-            'prompt': prompt,
-            'code': generated_code
+    @staticmethod
+    def save_code(path: str, content: str):
+        Path(path).write_text(content)
+    
+    @staticmethod
+    def save_metadata(prompt: str, generated_code: str):
+        log_dir = Path("generation_logs")
+        log_dir.mkdir(exist_ok=True)
+        
+        metadata = {
+            "timestamp": datetime.now().isoformat(),
+            "prompt": prompt,
+            "code": generated_code
         }
-        os.makedirs('logs', exist_ok=True)
-        with open(f'logs/generation_{timestamp}.json', 'w') as f:
-            json.dump(log_entry, f)
+        
+        filename = f"gen_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        (log_dir / filename).write_text(json.dumps(metadata, indent=2))
