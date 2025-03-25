@@ -1,4 +1,4 @@
-from .database import fetch_papers  # Se necessario
+from .database import fetch_papers
 from backend.database import fetch_papers
 
 def validate_experiment(data):
