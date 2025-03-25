@@ -27,6 +27,10 @@ def simulate():
     result = compute_simulation(data.get('input', []))
     return jsonify(result)
 
+@app.route('/validate')
+def validate():
+    return validate_experiment({})
+
 @socketio.on('connect')
 def handle_connect():
     print("Client connesso via WebSocket")
