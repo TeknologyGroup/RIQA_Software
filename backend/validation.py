@@ -1,4 +1,5 @@
 from .database import fetch_papers  # Se necessario
+from backend.database import fetch_papers
 
 def validate_experiment(data):
     # Esempio: recupera dati dal DB e valida
