@@ -241,6 +241,67 @@ docker-compose up --build
 **Contribuisci su GitHub**: [github.com/tuo-repo/RIQA_Software](https://github.com/tuo-repo/RIQA_Software)  
 **Licenza**: MIT  
 
-Per domande: team@riqa-software.org  
+Atra guida: 
 
---- 
+## Installazione del Backend
+1. Clona il repository:
+   ```bash
+   git clone <https://github.com/[tuo-username]/RIQA_Software.git>
+   cd RIQA_Software
+Installa le dipendenze Python:
+
+bash
+Copy
+pip install -r requirements.txt
+Avvia il server Flask:
+
+bash
+Copy
+python backend/main.py
+Installazione del Frontend
+Vai alla directory del frontend:
+
+bash
+Copy
+cd frontend
+Installa le dipendenze Node.js:
+
+bash
+Copy
+npm install
+Avvia il server di sviluppo:
+
+bash
+Copy
+npm start
+Installazione dell'App Mobile (opzionale)
+Installa Flutter e apri la directory dell'app mobile:
+
+bash
+Copy
+cd hardware/mobile_integration/mobile_app
+Avvia l'app:
+
+bash
+Copy
+flutter run
+Copy
+
+---
+
+### **6. Esecuzione del Software**
+1. Avvia il backend:
+   ```bash
+   python backend/main.py
+Avvia il frontend:
+
+bash
+Copy
+cd frontend
+npm start
+Apri il browser e vai a http://localhost:3000 per utilizzare l'interfaccia utente.
+
+Conclusione
+Il progetto RIQA_Software è ora aggiornato con le ultime modifiche, inclusa l'integrazione di Quantum Chaos Fingerprinting e l'integrazione con dispositivi mobili. La struttura è coerente, professionale e pronta per ulteriori espansioni. Se hai bisogno di ulteriori modifiche o aggiunte, fammelo sapere! 😊
+
+
