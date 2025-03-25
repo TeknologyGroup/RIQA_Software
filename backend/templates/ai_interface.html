@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RIQA AI Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.5.4/dist/socket.io.min.js"></script>
+    <style>
+        /* Stili ottimizzati */
+    </style>
+</head>
+<body>
+    <div id="ai-container">
+        <textarea id="ai-prompt"></textarea>
+        <button id="generate-btn">Genera Codice</button>
+        <pre id="code-output"></pre>
+    </div>
+
+    <script>
+        const socket = io();
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const prompt = document.getElementById('ai-prompt').value;
+            socket.emit('generate_code', {prompt});
+        });
+
+        socket.on('code_result', (data) => {
+            document.getElementById('code-output').textContent = data.code;
+        });
+    </script>
+</body>
+</html>
