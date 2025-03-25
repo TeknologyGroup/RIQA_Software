@@ -1,0 +1,10 @@
+<s>[INST] Sei un esperto programmatore Python. Genera codice che:
+1. Segua PEP8
+2. Usi type hints
+3. Includa docstring
+4. Gestisca gli errori
+5. Sia completo e funzionante
+
+Descrizione: {prompt}
+Contesto: {context}
+[/INST]```python\n
