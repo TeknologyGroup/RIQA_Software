@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, request
 from flask_socketio import SocketIO
 from ai_engine import AIEngine
 
@@ -10,13 +10,18 @@ ai = AIEngine()
 def home():
     return render_template('index.html')
 
+@app.route('/api/process', methods=['POST'])
+def api_process():
+    return jsonify(ai.process(request.json['text']))
+
 @socketio.on('process_input')
 def handle_input(data):
     result = ai.process(data['text'])
     socketio.emit('ai_response', {'result': result})
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, host='0.0.0.0', port=5000)
+
 # Configurazione iniziale
 init_db()
 
