@@ -1,3 +1,5 @@
+import logging
+logging.basicConfig(level=logging.DEBUG)
 from flask import Flask, jsonify, request
 from flask_socketio import SocketIO
 from database import init_db  # Cambiato da .database a database
