@@ -1,74 +1,62 @@
 import os
+import requests
 import logging
-from datetime import datetime
-from typing import Optional, Dict
-from ai.utilities.file_manager import FileManager
+from typing import Dict, Optional
+from dotenv import load_dotenv
+
+load_dotenv()  # Carica le variabili d'ambiente
 
 class CodeGenerator:
     def __init__(self):
-        self.file_manager = FileManager()
+        self.api_url = "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1"
+        self.headers = {
+            "Authorization": f"Bearer {os.getenv('HF_API_TOKEN')}",
+            "Content-Type": "application/json"
+        }
         self.logger = self._setup_logger()
-        self.templates_dir = os.path.join(os.path.dirname(__file__), 'templates')
-        
+
     def _setup_logger(self):
-        """Configura il sistema di logging"""
         logging.basicConfig(level=logging.INFO)
         return logging.getLogger(__name__)
-    
-    def generate(self, prompt: str, context: Optional[Dict] = None) -> str:
-        """
-        Genera codice basato sul prompt e contesto forniti
-        
-        Args:
-            prompt: Descrizione testuale della funzionalità richiesta
-            context: Dizionario con variabili di contesto aggiuntive
-        
-        Returns:
-            Codice generato come stringa
-        """
+
+    def _generate_from_prompt(self, prompt: str, context: Optional[Dict] = None) -> str:
+        """Genera codice usando l'API di HuggingFace"""
         try:
-            self.logger.info(f"Generating code for prompt: {prompt[:50]}...")
+            instruction = ("Crea un file Python completo basato sulla seguente descrizione. "
+                         "Includi tutti gli import necessari e docstring. "
+                         "Restituisci SOLO il codice, senza commenti aggiuntivi.")
             
-            # 1. Pre-processamento
-            clean_prompt = self._preprocess_prompt(prompt)
+            full_prompt = f"""<s>[INST] {instruction}
+Descrizione: {prompt}
+Contesto: {context or {}}
+[/INST]```python\n"""
             
-            # 2. Generazione del codice (implementa la tua logica qui)
-            generated_code = self._generate_from_prompt(clean_prompt, context or {})
+            payload = {
+                "inputs": full_prompt,
+                "parameters": {
+                    "max_new_tokens": 1000,
+                    "temperature": 0.2,
+                    "do_sample": True,
+                    "return_full_text": False
+                }
+            }
             
-            # 3. Salvataggio e log
-            self.file_manager.save_generation_log(
-                prompt=prompt,
-                generated_code=generated_code,
-                timestamp=datetime.now().isoformat()
-            )
+            response = requests.post(self.api_url, headers=self.headers, json=payload)
+            response.raise_for_status()
             
-            return generated_code
+            generated_code = response.json()[0]['generated_text']
+            # Pulizia del risultato
+            return generated_code.split("```python\n")[-1].split("```")[0].strip()
             
         except Exception as e:
-            self.logger.error(f"Generation failed: {str(e)}")
-            raise RuntimeError(f"Code generation error: {str(e)}")
+            self.logger.error(f"Errore nella generazione: {str(e)}")
+            raise RuntimeError(f"Generazione fallita: {str(e)}")
 
-    def _preprocess_prompt(self, prompt: str) -> str:
-        """Pulisce e normalizza il prompt di input"""
-        return prompt.strip().replace('\t', ' ' * 4)
-
-    def _generate_from_prompt(self, prompt: str, context: Dict) -> str:
-        """
-        Implementazione core della generazione del codice.
-        Sostituisci con la tua logica effettiva (es: modello AI, template system, ecc.)
-        """
-        # Esempio base - sostituire con la tua implementazione reale
-        code_template = f"""
-# Generated at {datetime.now().isoformat()}
-# Prompt: {prompt}
-
-def generated_function():
-    \"\"\"Funzione generata automaticamente\"\"\"
-    print("Hello from generated code!")
-    return 42
-        """
-        return code_template.strip()
-
-    def batch_generate(self, prompts: list) -> dict:
-        """Genera codice per multipli prompts"""
-        return {prompt: self.generate(prompt) for prompt in prompts}
+    def generate_file(self, prompt: str, output_path: str, context: Optional[Dict] = None):
+        """Genera e salva direttamente un file Python"""
+        code = self.generate(prompt, context)
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, 'w') as f:
+            f.write(code)
+        self.logger.info(f"File generato: {output_path}")
+        return output_path
