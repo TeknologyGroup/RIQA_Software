@@ -4,6 +4,8 @@ from database import init_db  # Cambiato da .database a database
 from data_fetcher import search_arxiv  # Cambiato da .data_fetcher
 from simulation import compute_simulation  # Cambiato da .simulation
 from validation import validate_experiment  # Cambiato da .validation
+from backend.database import init_db
+from backend.validation import validate_experiment
 
 app = Flask(__name__)
 socketio = SocketIO(app)
