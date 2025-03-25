@@ -1,11 +1,15 @@
-from flask import Flask, render_template, jsonify, request
-from flask_socketio import SocketIO
-from ai_engine import AIEngine
+from flask import Flask, request, jsonify
+from ai.core import RIQAAI
 
 app = Flask(__name__)
-socketio = SocketIO(app)
-ai = AIEngine()
+ai_engine = RIQAAI()  # Istanza della tua AI
 
+@app.route('/ai/process', methods=['POST'])
+def process_ai():
+    data = request.json
+    result = ai_engine.process(data['input'])
+    return jsonify({"result": result})
+    
 @app.route('/')
 def home():
     return render_template('index.html')
