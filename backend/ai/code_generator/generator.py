@@ -60,3 +60,11 @@ Contesto: {context or {}}
             f.write(code)
         self.logger.info(f"File generato: {output_path}")
         return output_path
+
+params = {
+    "max_new_tokens": 1500,  # Lunghezza massima del codice
+    "temperature": 0.3,      # 0 (deterministico) - 1 (creativo)
+    "top_k": 50,             # Filtra i 50 token più probabili
+    "top_p": 0.95,           # Considera solo i token con probabilità cumulativa <= 0.95
+    "repetition_penalty": 1.2  # Penalizza la ripetizione di token
+}
