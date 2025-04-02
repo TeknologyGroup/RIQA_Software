@@ -77,11 +77,10 @@ To start the **RIQA_Software** project on a Linux (Debian) terminal on a Chromeb
 Open the Linux terminal and clone the project's GitHub repository:
 
 ```bash
-git clone https://github.com/[your-username]/RIQA_Software.git
+git clone https://github.com/TeknologyGroup/RIQA_Software.git
 cd RIQA_Software
 ```
 
-Replace `[your-username]` with your GitHub username or the correct repository URL.
 
 ---
 
