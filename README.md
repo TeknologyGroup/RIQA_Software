@@ -213,7 +213,3 @@ Now that everything is set up, you can use the software:
 ### **10. Stopping the Services**
 To stop the services:
 - Press `Ctrl + C` in the terminals where Flask (`backend/main.py`) and React (`npm start`) are running.
-
----
-
-By following these steps, you should be able to start and use the **RIQA_Software** project on your Chromebook with Linux Debian.
