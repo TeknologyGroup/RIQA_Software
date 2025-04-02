@@ -1,68 +1,98 @@
 # RIQA_Software
 
-**Sottotitolo**: Simulazione di Wormhole e Zeri della Funzione Zeta di Riemann  
-**Autore**: Martino Battista  
-**Data**: 20 Marzo 2025  
-**Licenza**: MIT License  
+**Subtitle**: Wormhole Simulation and Riemann Zeta Function Zeros
+**Author**: Martino Battista
+**Date**: March 20, 2025
+**License**: MIT License
 
 ---
 
-## Panoramica
+## Overview
 
-**RIQA_Software** è un framework modulare open-source progettato per esplorare la connessione teorica tra i wormhole attraversabili della relatività generale e gli zeri non banali della funzione zeta di Riemann (\( \zeta(s) \)). Il progetto integra simulazioni numeriche, visualizzazioni interattive in 2D e 3D, raccolta di dati da sensori fisici e un’interfaccia vocale, offrendo uno strumento versatile per la ricerca interdisciplinare tra fisica teorica e matematica pura.
+**RIQA_Software** is a modular open-source framework designed to explore the theoretical connection between traversable wormholes in general relativity and the non-trivial zeros of the Riemann zeta function ($$ \zeta(s) $$). The project integrates numerical simulations, interactive 2D and 3D visualizations, data collection from physical sensors, and a voice interface, offering a versatile tool for interdisciplinary research between theoretical physics and pure mathematics.
 
-L’ipotesi centrale propone che gli zeri non banali di \( \zeta(s) \) sulla linea critica (\( s = 1/2 + it \), es. \( t_1 \approx 14.1347 \)) possano corrispondere a singolarità o punti critici nella metrica dei wormhole, suggerendo una relazione tra la distribuzione dei numeri primi e la geometria dello spazio-tempo.
+The central hypothesis proposes that the non-trivial zeros of $$ \zeta(s) $$ on the critical line ($$ s = 1/2 + it $$, e.g., $$ t_1 \approx 14.1347 $$) may correspond to singularities or critical points in the wormhole metric, suggesting a relationship between the distribution of prime numbers and the geometry of spacetime.
 
-## Caratteristiche Principali
+## Key Features
 
-- **Simulazioni Numeriche**: Calcolo della metrica di wormhole con parametri influenzati dagli zeri di \( \zeta(s) \).
-- **Visualizzazioni**: Grafici 2D interattivi (Plotly) e modelli 3D dinamici (Three.js) della geometria wormhole.
-- **Integrazione Hardware**: Raccolta dati in tempo reale da sensori (es. accelerometro MPU-6050) tramite Bluetooth Low Energy (BLE).
-- **Controllo Vocale**: Interfaccia assistente per avviare simulazioni con comandi vocali.
-- **Database**: Archiviazione strutturata di risultati e dati sperimentali con SQLite.
+- **Numerical Simulations**: Calculation of the wormhole metric with parameters influenced by the zeros of $$ \zeta(s) $$.
+- **Visualizations**: Interactive 2D charts (Plotly) and dynamic 3D models (Three.js) of the wormhole geometry.
+- **Hardware Integration**: Real-time data collection from sensors (e.g., MPU-6050 accelerometer) via Bluetooth Low Energy (BLE).
+- **Voice Control**: Assistant interface to start simulations with voice commands.
+- **Database**: Structured storage of results and experimental data with SQLite.
 
-## Struttura del Progetto
+## Project Structure
 
-La struttura del repository è organizzata in modo modulare per separare chiaramente le diverse componenti:
+The repository structure is organized in a modular way to clearly separate the different components:
 
+```plaintext
+RIQA_Software/
+├── frontend/                  # React-based user interface
+│   ├── src/                   # Frontend source code
+│   │   ├── App.js             # Application routing and main layout
+│   │   ├── components/        # Reusable React components
+│   │   │   ├── SimulationForm.js  # Form to start and configure simulations
+│   │   │   └── Wormhole3D.js      # 3D wormhole visualization with Three.js
+│   │   └── pages/             # Application pages
+│   │       └── Simulations.js     # Page dedicated to simulations
+├── backend/                   # Flask server for logic and API
+│   ├── main.py                # Main Flask API file
+│   ├── simulations/           # Modules for simulations
+│   │   └── wormhole_zeta.py # Wormhole metric simulation based on zeta zeros
+│   ├── assistant_interface.py # Voice interface for software control
+│   └── mobile_data.py         # Management of data received from sensors via Bluetooth/BLE
+├── database/                 # SQLite database for data and results
+│   └── models/               # Data models
+│       └── simulation_results.py  # Database schema for simulation results
+├── visualizations/           # Tools for data visualization
+│   └── plots/                # Modules for charts
+│       └── wormhole_plot.py # Interactive 2D plots of the metric with Plotly
+├── hardware/                 # Integration with hardware devices
+│   └── mobile_integration/   # Communication with mobile devices
+│       ├── bluetooth/        # Scripts for Bluetooth and BLE
+│       │   └── arduino_hm10_sensors.ino  # Arduino code for HM-10 and sensors
+│       └── mobile_app/       # Mobile application
+│           └── main.dart     # Flutter app for control and monitoring
+├── docs/                     # Project documentation
+│   ├── wormhole_zeta.md      # Theory on wormholes and zeta function zeros
+│   ├── formulas.tex          # Collection of mathematical formulas in LaTeX
+└── requirements.txt          # List of Python dependencies
+```
 
-RIQA_Software/├── frontend/                  # Interfaccia utente basata su React│   ├── src/                   # Codice sorgente del frontend│   │   ├── App.js            # Routing e layout principale dell’applicazione│   │   ├── components/       # Componenti React riutilizzabili│   │   │   ├── SimulationForm.js  # Form per avviare e configurare le simulazioni│   │   │   └── Wormhole3D.js      # Visualizzazione 3D del wormhole con Three.js│   │   └── pages/            # Pagine dell’applicazione│   │       └── Simulations.js     # Pagina dedicata alle simulazioni├── backend/                   # Server Flask per logica e API│   ├── main.py               # File principale dell’API Flask│   ├── simulations/          # Moduli per le simulazioni│   │   └── wormhole_zeta.py  # Simulazione della metrica wormhole basata su zeri zeta│   ├── assistant_interface.py # Interfaccia vocale per il controllo del software│   └── mobile_data.py        # Gestione dei dati ricevuti dai sensori via Bluetooth/BLE├── database/                 # Database SQLite per dati e risultati│   └── models/               # Modelli dei dati│       └── simulation_results.py  # Schema del database per i risultati delle simulazioni├── visualizations/           # Strumenti per la visualizzazione dei dati│   └── plots/                # Moduli per grafici│       └── wormhole_plot.py  # Grafici 2D interattivi della metrica con Plotly├── hardware/                 # Integrazione con dispositivi hardware│   └── mobile_integration/   # Comunicazione con dispositivi mobili│       ├── bluetooth/        # Script per Bluetooth e BLE│       │   └── arduino_hm10_sensors.ino  # Codice Arduino per HM-10 e sensori│       └── mobile_app/       # Applicazione mobile│           └── main.dart     # App Flutter per controllo e monitoraggio├── docs/                     # Documentazione del progetto│   ├── wormhole_zeta.md      # Teoria su wormhole e zeri della funzione zeta│   └── formulas.tex          # Raccolta di formule matematiche in LaTeX└── requirements.txt          # Elenco delle dipendenze Python
+## Prerequisites
 
+- **Python**: 3.8 or higher
+- **Node.js**: For the React frontend
+- **Flutter**: For the mobile app (iOS/Android)
+- **Arduino IDE**: To upload code to hardware devices
+- **Hardware**: Arduino with HM-10 module and MPU-6050 sensor (optional)
 
-## Prerequisiti
+## Installation
 
-- **Python**: 3.8 o superiore
-- **Node.js**: Per il frontend React
-- **Flutter**: Per l’app mobile (iOS/Android)
-- **Arduino IDE**: Per caricare il codice sui dispositivi hardware
-- **Hardware**: Arduino con modulo HM-10 e sensore MPU-6050 (opzionale)
-
-## Installazione
-
-Per avviare il progetto **RIQA_Software** su un terminale Linux (Debian) su Chromebook, segui questi passaggi passo dopo passo. Assicurati di avere già configurato l'ambiente Linux sul tuo Chromebook e di avere installato i prerequisiti necessari (Python, Node.js, Flutter, Arduino IDE, ecc.).
+To start the **RIQA_Software** project on a Linux (Debian) terminal on a Chromebook, follow these steps. Make sure you have already configured the Linux environment on your Chromebook and have installed the necessary prerequisites (Python, Node.js, Flutter, Arduino IDE, etc.).
 
 ---
 
-### **1. Clona il Repository**
-Apri il terminale Linux e clona il repository GitHub del progetto:
+### **1. Clone the Repository**
+Open the Linux terminal and clone the project's GitHub repository:
 
 ```bash
-git clone https://github.com/[tuo-username]/RIQA_Software.git
+git clone https://github.com/[your-username]/RIQA_Software.git
 cd RIQA_Software
 ```
 
-Sostituisci `[tuo-username]` con il tuo username GitHub o l'URL corretto del repository.
+Replace `[your-username]` with your GitHub username or the correct repository URL.
 
 ---
 
-### **2. Installa le Dipendenze del Backend**
-Installa le dipendenze Python necessarie per il backend Flask:
+### **2. Install Backend Dependencies**
+Install the necessary Python dependencies for the Flask backend:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Se non hai `pip` installato, puoi installarlo con:
+If you don't have `pip` installed, you can install it with:
 
 ```bash
 sudo apt update
@@ -71,31 +101,31 @@ sudo apt install python3-pip
 
 ---
 
-### **3. Avvia il Backend**
-Avvia il server Flask per il backend:
+### **3. Start the Backend**
+Start the Flask server for the backend:
 
 ```bash
 python backend/main.py
 ```
 
-Il server Flask dovrebbe avviarsi e rimanere in esecuzione in attesa di richieste. Tieni aperto questo terminale.
+The Flask server should start and remain running, awaiting requests. Keep this terminal open.
 
 ---
 
-### **4. Installa le Dipendenze del Frontend**
-Apri un nuovo terminale (o una nuova scheda del terminale) e naviga nella cartella `frontend`:
+### **4. Install Frontend Dependencies**
+Open a new terminal (or a new terminal tab) and navigate to the `frontend` folder:
 
 ```bash
 cd frontend
 ```
 
-Installa le dipendenze Node.js per il frontend React:
+Install the Node.js dependencies for the React frontend:
 
 ```bash
 npm install
 ```
 
-Installa anche la libreria `three.js` per le visualizzazioni 3D:
+Also install the `three.js` library for the 3D visualizations:
 
 ```bash
 npm install three
@@ -103,26 +133,26 @@ npm install three
 
 ---
 
-### **5. Avvia il Frontend**
-Avvia il server di sviluppo React:
+### **5. Start the Frontend**
+Start the React development server:
 
 ```bash
 npm start
 ```
 
-Questo aprirà automaticamente il frontend nel browser predefinito all'indirizzo `http://localhost:3000`. Se non si apre automaticamente, puoi accedervi manualmente.
+This will automatically open the frontend in the default browser at `http://localhost:3000`. If it doesn't open automatically, you can access it manually.
 
 ---
 
-### **6. Configura l'Hardware (Opzionale)**
-Se desideri utilizzare l'hardware (Arduino con modulo HM-10 e sensore MPU-6050), segui questi passaggi:
+### **6. Configure Hardware (Optional)**
+If you want to use the hardware (Arduino with HM-10 module and MPU-6050 sensor), follow these steps:
 
-1. **Carica il Codice su Arduino**:
-   - Apri il file `hardware/mobile_integration/bluetooth/arduino_hm10_sensors.ino` nell'Arduino IDE.
-   - Collega l'Arduino al Chromebook e carica il codice.
+1. **Upload Code to Arduino**:
+   - Open the file `hardware/mobile_integration/bluetooth/arduino_hm10_sensors.ino` in the Arduino IDE.
+   - Connect the Arduino to the Chromebook and upload the code.
 
-2. **Avvia la Gestione dei Dati**:
-   Torna al terminale principale (dove hai clonato il repository) e avvia lo script Python per la gestione dei dati:
+2. **Start Data Management**:
+   Return to the main terminal (where you cloned the repository) and start the Python script for data management:
 
    ```bash
    python backend/mobile_data.py
@@ -130,25 +160,25 @@ Se desideri utilizzare l'hardware (Arduino con modulo HM-10 e sensore MPU-6050),
 
 ---
 
-### **7. Configura l'App Mobile (Opzionale)**
-Se desideri utilizzare l'app mobile Flutter:
+### **7. Configure the Mobile App (Optional)**
+If you want to use the Flutter mobile app:
 
-1. Installa Flutter sul Chromebook (se non lo hai già fatto):
-   - Segui la guida ufficiale: https://flutter.dev/docs/get-started/install/linux
+1. Install Flutter on your Chromebook (if you haven't already):
+   - Follow the official guide: https://flutter.dev/docs/get-started/install/linux
 
-2. Naviga nella cartella dell'app mobile:
+2. Navigate to the mobile app folder:
 
    ```bash
    cd hardware/mobile_integration/mobile_app/
    ```
 
-3. Installa le dipendenze Flutter:
+3. Install the Flutter dependencies:
 
    ```bash
    flutter pub get
    ```
 
-4. Avvia l'app:
+4. Run the app:
 
    ```bash
    flutter run
@@ -156,35 +186,40 @@ Se desideri utilizzare l'app mobile Flutter:
 
 ---
 
-### **8. Utilizzo del Software**
-Ora che tutto è configurato, puoi utilizzare il software:
+### **8. Using the Software**
+Now that everything is set up, you can use the software:
 
 1. **Frontend**:
-   - Apri `http://localhost:3000` nel browser.
-   - Vai alla pagina "Simulations" e inserisci un indice dello zero non banale (es. "1" per \( t_1 \approx 14.1347 \)) nel form.
-   - Clicca "Esegui Simulazione" per avviare la simulazione.
+   - Open `http://localhost:3000` in your browser.
+   - Go to the "Simulations" page and enter an index of a non-trivial zero (e.g., "1" for $$ t_1 \approx 14.1347 $$) in the form.
+   - Click "Run Simulation" to start the simulation.
 
-2. **Visualizzazione**:
-   - I grafici 2D della metrica verranno visualizzati con Plotly.
-   - Il modello 3D interattivo del wormhole verrà visualizzato con Three.js.
+2. **Visualization**:
+   - The 2D plots of the metric will be displayed with Plotly.
+   - The interactive 3D model of the wormhole will be displayed with Three.js.
 
-3. **Dati Hardware**:
-   - Se hai configurato l'hardware, i dati dei sensori verranno raccolti e correlati con i parametri della simulazione.
-
----
-
-### **9. Debug e Risoluzione dei Problemi**
-- Se incontri errori, verifica che tutte le dipendenze siano installate correttamente.
-- Controlla che i server Flask e React siano in esecuzione.
-- Se utilizzi l'hardware, assicurati che l'Arduino sia correttamente collegato e configurato.
+3. **Hardware Data**:
+   - If you have configured the hardware, the sensor data will be collected and correlated with the simulation parameters.
 
 ---
 
-### **10. Fermare i Servizi**
-Per fermare i servizi:
-- Premi `Ctrl + C` nei terminali dove sono in esecuzione Flask (`backend/main.py`) e React (`npm start`).
+### **9. Debugging and Troubleshooting**
+- If you encounter errors, verify that all dependencies are installed correctly.
+- Check that the Flask and React servers are running.
+- If you are using the hardware, make sure the Arduino is correctly connected and configured.
 
 ---
 
-Seguendo questi passaggi, dovresti essere in grado di avviare e utilizzare il progetto **RIQA_Software** sul tuo Chromebook con Linux Debian.
+### **10. Stopping the Services**
+To stop the services:
+- Press `Ctrl + C` in the terminals where Flask (`backend/main.py`) and React (`npm start`) are running.
 
+---
+
+By following these steps, you should be able to start and use the **RIQA_Software** project on your Chromebook with Linux Debian.
+
+Citations:
+[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/39375871/b51c465b-1f7f-4aa0-b58b-f04007549a1c/paste.txt
+
+---
+Risposta da Perplexity: pplx.ai/share
