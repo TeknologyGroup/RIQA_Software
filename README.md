@@ -217,9 +217,3 @@ To stop the services:
 ---
 
 By following these steps, you should be able to start and use the **RIQA_Software** project on your Chromebook with Linux Debian.
-
-Citations:
-[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/39375871/b51c465b-1f7f-4aa0-b58b-f04007549a1c/paste.txt
-
----
-Risposta da Perplexity: pplx.ai/share
