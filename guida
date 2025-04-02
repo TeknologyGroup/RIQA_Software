@@ -1,80 +1,84 @@
-# **Guida Sviluppatore per RIQA_Software**  
-**Versione 1.0**  
-*Ultimo aggiornamento: 24 Marzo 2025*  
+Ecco la traduzione in inglese della tua guida:
 
 ---
 
-## **Indice**  
-1. [Panoramica del Progetto](#panoramica-del-progetto)  
-2. [Struttura del Codice](#struttura-del-codice)  
-3. [Configurazione Iniziale](#configurazione-iniziale)  
-4. [Backend: API, Simulazioni e Database](#backend-api-simulazioni-e-database)  
-5. [AI Generativa e Ottimizzazione](#ai-generativa-e-ottimizzazione)  
-6. [Frontend: Visualizzazione e Grafici](#frontend-visualizzazione-e-grafici)  
-7. [Blockchain e Smart Contract](#blockchain-e-smart-contract)  
-8. [Testing e Validazione](#testing-e-validazione)  
-9. [Deploy con Docker](#deploy-con-docker)  
-10. [Roadmap Futura](#roadmap-futura)  
+## **Developer Guide for RIQA_Software**
+**Version 1.0**
+*Last Update: March 24, 2025*
 
 ---
 
-## **1. Panoramica del Progetto**  
-**RIQA_Software** è un framework open-source per:  
-- **Simulazioni scientifiche avanzate** (quantistiche, astrali, meteorologiche).  
-- **AI generativa** per creazione e ottimizzazione di codice.  
-- **Integrazione blockchain** (donazioni, calcolo distribuito).  
-- **Visualizzazione interattiva** con grafici 2D/3D.  
+## **Index**
+1. [Project Overview](#project-overview)
+2. [Code Structure](#code-structure)
+3. [Initial Configuration](#initial-configuration)
+4. [Backend: API, Simulations, and Database](#backend-api-simulations-and-database)
+5. [Generative AI and Optimization](#generative-ai-and-optimization)
+6. [Frontend: Visualization and Charts](#frontend-visualization-and-charts)
+7. [Blockchain and Smart Contracts](#blockchain-and-smart-contracts)
+8. [Testing and Validation](#testing-and-validation)
+9. [Deployment with Docker](#deployment-with-docker)
+10. [Future Roadmap](#future-roadmap)
 
 ---
 
-## **2. Struttura del Codice**  
+## **1. Project Overview**
+**RIQA_Software** is an open-source framework for:
+- **Advanced Scientific Simulations** (quantum, astronomical, meteorological).
+- **Generative AI** for code creation and optimization.
+- **Blockchain Integration** (donations, distributed computing).
+- **Interactive Visualization** with 2D/3D charts.
+
+---
+
+## **2. Code Structure**
+```plaintext
+RIQA_Software/
+├── backend/                  # Logical Core
+│   ├── app.py                # Flask/FastAPI Server
+│   ├── simulation.py         # Numerical Simulations
+│   ├── quantum_interface.py # Quantum Circuits (Qiskit)
+│   ├── zeta_calculations.py # Advanced Mathematics
+│   └── tests/                # Unit Tests
+├── ai/                       # AI Modules
+│   ├── code_generator.py     # Code Generation (Hugging Face)
+│   └── optimizer.py          # Code Optimization
+├── frontend/                 # User Interface
+│   ├── src/
+│   │   ├── components/       # Plotly/D3.js Charts
+│   │   └── stores/           # Simulation State Management
+├── blockchain/               # Smart Contracts and Web3
+│   ├── contracts/            # Solidity
+│   └── web3/                 # Connection to Polygon
+├── config/                   # Environment Variables
+└── docker-compose.yml        # Container Configuration
 ```
-RIQA_Software/  
-├── backend/                  # Core logico  
-│   ├── app.py                # Server Flask/FastAPI  
-│   ├── simulation.py         # Simulazioni numeriche  
-│   ├── quantum_interface.py  # Circuiti quantistici (Qiskit)  
-│   ├── zeta_calculations.py  # Matematica avanzata  
-│   └── tests/                # Test unitari  
-├── ai/                       # Moduli AI  
-│   ├── code_generator.py     # Generazione codice (Hugging Face)  
-│   └── optimizer.py          # Ottimizzazione codice  
-├── frontend/                 # Interfaccia utente  
-│   ├── src/  
-│   │   ├── components/       # Grafici Plotly/D3.js  
-│   │   └── stores/           # Gestione stato simulazioni  
-├── blockchain/               # Smart contract e Web3  
-│   ├── contracts/            # Solidity  
-│   └── web3/                 # Connessione a Polygon  
-├── config/                   # Variabili d'ambiente  
-└── docker-compose.yml        # Configurazione container  
-```
 
 ---
 
-## **3. Configurazione Iniziale**  
+## **3. Initial Configuration**
 
-### **Prerequisiti**  
-- Python 3.10+  
-- Node.js 18+  
-- PostgreSQL 13+  
-- Docker (opzionale)  
+### **Prerequisites**
+- Python 3.10+
+- Node.js 18+
+- PostgreSQL 13+
+- Docker (optional)
 
-### **Setup**  
-1. Clona il repository:  
+### **Setup**
+1. Clone the repository:
    ```bash
-   git clone https://github.com/tuo-repo/RIQA_Software.git
+   git clone https://github.com/your-repo/RIQA_Software.git
    cd RIQA_Software
    ```
 
-2. Configura le variabili d'ambiente (`config/.env`):  
+2. Configure environment variables (`config/.env`):
    ```env
    DATABASE_URL=postgresql://user:password@localhost:5432/riqa
-   HF_API_TOKEN=hf_tuo_token
+   HF_API_TOKEN=hf_your_token
    POLYGON_RPC=https://rpc-mumbai.matic.today
    ```
 
-3. Installa le dipendenze:  
+3. Install dependencies:
    ```bash
    # Backend
    pip install -r backend/requirements.txt
@@ -85,16 +89,16 @@ RIQA_Software/
 
 ---
 
-## **4. Backend: API, Simulazioni e Database**  
+## **4. Backend: API, Simulations, and Database**
 
-### **Endpoint Principali**  
-| Endpoint                 | Metodo | Descrizione                          |  
-|--------------------------|--------|--------------------------------------|  
-| `/submit_equation`       | POST   | Salva equazioni utente nel DB        |  
-| `/simulate`              | POST   | Avvia simulazioni (quantistiche, ecc.) |  
-| `/ws/simulation`         | WS     | Stream risultati in tempo reale      |  
+### **Main Endpoints**
+| Endpoint                 | Method | Description                          |
+|--------------------------|--------|--------------------------------------|
+| `/submit_equation`       | POST   | Saves user equations to the DB       |
+| `/simulate`              | POST   | Starts simulations (quantum, etc.)  |
+| `/ws/simulation`         | WS     | Streams results in real-time        |
 
-### **Esempio: Simulazione Quantistica**  
+### **Example: Quantum Simulation**
 ```python
 # backend/quantum_interface.py
 from qiskit import QuantumCircuit, execute, Aer
@@ -111,9 +115,9 @@ def run_quantum_simulation(params):
 
 ---
 
-## **5. AI Generativa e Ottimizzazione**  
+## **5. Generative AI and Optimization**
 
-### **Generazione Codice con Hugging Face**  
+### **Code Generation with Hugging Face**
 ```python
 # ai/code_generator.py
 def generate_code(prompt):
@@ -125,48 +129,48 @@ def generate_code(prompt):
     return response.json()[0]['generated_text']
 ```
 
-### **Ottimizzazione Automatica**  
+### **Automatic Optimization**
 ```python
 # ai/optimizer.py
 from code_generator import generate_code
 
 def optimize_code(code):
-    prompt = f"Ottimizza questo codice Python:\n\n{code}"
+    prompt = f"Optimize this Python code:\n\n{code}"
     return generate_code(prompt)
 ```
 
 ---
 
-## **6. Frontend: Visualizzazione e Grafici**  
+## **6. Frontend: Visualization and Charts**
 
-### **Grafici con Plotly.js**  
+### **Charts with Plotly.js**
 ```javascript
 // frontend/src/components/SimulationChart.vue
-<template>
-  <div>
-    <Plotly :data="plotData" :layout="layout" />
-  </div>
-</template>
 
-<script>
+  
+    
+  
+
+
+
 import { Plotly } from 'vue-plotly'
 
 export default {
   data() {
     return {
       plotData: [{ x: [1, 2, 3], y: [2, 4, 6], type: 'scatter' }],
-      layout: { title: 'Risultati Simulazione' }
+      layout: { title: 'Simulation Results' }
     }
   }
 }
-</script>
+
 ```
 
 ---
 
-## **7. Blockchain e Smart Contract**  
+## **7. Blockchain and Smart Contracts**
 
-### **Contratto Solidity per Donazioni**  
+### **Solidity Contract for Donations**
 ```solidity
 // blockchain/contracts/DonationContract.sol
 function donate() external payable {
@@ -175,7 +179,7 @@ function donate() external payable {
 }
 ```
 
-### **Connessione Frontend (Web3.js)**  
+### **Frontend Connection (Web3.js)**
 ```javascript
 // blockchain_app/src/utils/blockchain.js
 const donateToContract = async (amount) => {
@@ -187,9 +191,9 @@ const donateToContract = async (amount) => {
 
 ---
 
-## **8. Testing e Validazione**  
+## **8. Testing and Validation**
 
-### **Test Unitari (pytest)**  
+### **Unit Tests (pytest)**
 ```python
 # backend/tests/test_quantum.py
 def test_quantum_simulation():
@@ -197,7 +201,7 @@ def test_quantum_simulation():
     assert "00" in result or "11" in result
 ```
 
-### **Test Endpoint (Flask-Testing)**  
+### **Endpoint Tests (Flask-Testing)**
 ```python
 # backend/tests/test_api.py
 def test_submit_equation(self):
@@ -207,9 +211,9 @@ def test_submit_equation(self):
 
 ---
 
-## **9. Deploy con Docker**  
+## **9. Deployment with Docker**
 
-### **docker-compose.yml**  
+### **docker-compose.yml**
 ```yaml
 services:
   backend:
@@ -224,84 +228,97 @@ services:
       POSTGRES_PASSWORD: secret
 ```
 
-### **Comandi per il Deploy**  
+### **Deployment Commands**
 ```bash
 docker-compose up --build
 ```
 
 ---
 
-## **10. Roadmap Futura**  
-- **Integrazione con chip quantistici reali** (Majorana/Willow).  
-- **Calcolo distribuito** su dispositivi utente.  
-- **Dashboard avanzata** per analisi dati.  
+## **10. Future Roadmap**
+- **Integration with Real Quantum Chips** (Majorana/Willow).
+- **Distributed Computing** on user devices.
+- **Advanced Dashboard** for data analysis.
 
 ---
 
-**Contribuisci su GitHub**: [github.com/tuo-repo/RIQA_Software](https://github.com/tuo-repo/RIQA_Software)  
-**Licenza**: MIT  
+**Contribute on GitHub**: [github.com/your-repo/RIQA_Software](https://github.com/your-repo/RIQA_Software)  
+**License**: MIT  
 
-Atra guida: 
+---
 
-## Installazione del Backend
-1. Clona il repository:
+### **Additional Installation Guide**
+
+## Installation of the Backend
+1. Clone the repository:
    ```bash
-   git clone <https://github.com/[tuo-username]/RIQA_Software.git>
+   git clone https://github.com/[your-username]/RIQA_Software.git
    cd RIQA_Software
-Installa le dipendenze Python:
+   ```
+   
+Install Python dependencies:
 
-bash
-Copy
-pip install -r requirements.txt
-Avvia il server Flask:
+```bash
+pip install -r backend/requirements.txt
+```
 
-bash
-Copy
+Start the Flask server:
+
+```bash
 python backend/main.py
-Installazione del Frontend
-Vai alla directory del frontend:
+```
 
-bash
-Copy
+## Installation of the Frontend
+Navigate to the frontend directory:
+
+```bash
 cd frontend
-Installa le dipendenze Node.js:
+```
 
-bash
-Copy
+Install Node.js dependencies:
+
+```bash
 npm install
-Avvia il server di sviluppo:
+```
 
-bash
-Copy
+Start the development server:
+
+```bash
 npm start
-Installazione dell'App Mobile (opzionale)
-Installa Flutter e apri la directory dell'app mobile:
+```
 
-bash
-Copy
+## Installation of the Mobile App (Optional)
+Install Flutter and open the mobile app directory:
+
+```bash
 cd hardware/mobile_integration/mobile_app
-Avvia l'app:
+```
 
-bash
-Copy
+Run the app:
+
+```bash
 flutter run
-Copy
+```
 
 ---
 
-### **6. Esecuzione del Software**
-1. Avvia il backend:
+### **6. Running the Software**
+1. Start the backend:
    ```bash
    python backend/main.py
-Avvia il frontend:
+   ```
 
-bash
-Copy
-cd frontend
-npm start
-Apri il browser e vai a http://localhost:3000 per utilizzare l'interfaccia utente.
+2. Start the frontend:
+   ```bash
+   cd frontend
+   npm start
+   ```
 
-Conclusione
-Il progetto RIQA_Software è ora aggiornato con le ultime modifiche, inclusa l'integrazione di Quantum Chaos Fingerprinting e l'integrazione con dispositivi mobili. La struttura è coerente, professionale e pronta per ulteriori espansioni. Se hai bisogno di ulteriori modifiche o aggiunte, fammelo sapere! 😊
+Open your browser and go to `http://localhost:3000` to use the user interface.
 
+Conclusion
+The RIQA_Software project is now updated with the latest changes, 
+including the integration of Quantum Chaos Fingerprinting and mobile device integration. 
+The structure is coherent, professional, and ready for further expansions. 
 
+If you need additional modifications or additions, let me know! 😊
