@@ -3,7 +3,7 @@
 **Subtitle**: Wormhole Simulation and Riemann Zeta Function Zeros
 **Author**: Martino Battista
 **Date**: March 20, 2025
-**License**: MIT License
+**License**: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International 
 
 ---
 
